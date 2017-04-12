@@ -148,6 +148,9 @@ public class MsoyController extends Controller
 
     /** Command to show users the subscribe page. */
     public static const SUBSCRIBE :String = "Subscribe";
+    
+    /** Command to show users the staff page! */
+    public static const STAFF :String = "Staff";
 
     // NOTE:
     // Any commands defined in this class should be handled in this class.
