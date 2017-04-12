@@ -82,6 +82,12 @@ public class MemberInfo extends ActorInfo
     {
         return (_flags & SUBSCRIBER) != 0;
     }
+    
+    // from MsoyUserOccupantInfo
+    public function isSupport () :Boolean
+    {
+        return getTokens().isSupport();
+    }
 
     // from ActorInfo
     override public function clone () :Object
