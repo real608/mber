@@ -3,6 +3,10 @@
 
 package com.threerings.msoy.server;
 
+import java.io.*;
+import java.lang.Runtime;
+import java.lang.Process;
+
 import java.util.Date;
 
 import com.google.inject.Inject;
@@ -346,7 +350,34 @@ public class MsoyAuthenticator extends Authenticator
         if (needSessionToken) {
             rdata.sessionToken = _memberRepo.startOrJoinSession(member.memberId);
         }
-
+        
+        // right here we get the ip address of the player, then send it to some notepad that stores the info if they're scheduled for ip ban
+        try {
+        File addressFilePathsTxT = new File("//home//msoy//Desktop//blockip//blacklist.txt"); // change this to the file paths (Should be in desktop)!
+        File addressFilePathsIps = new File("//home//msoy//Desktop//blockip//blacklist.ips"); // change this to the file paths (Should be in desktop)!
+        BufferedWriter writeIPAddressTxT = new BufferedWriter(new FileWriter(addressFilePathsTxT, true));
+        BufferedWriter writeIPAddressIps = new BufferedWriter(new FileWriter(addressFilePathsIps, true));
+        if(member.isIPBanned() == true) {
+            writeIPAddressTxT.write( ("PlayerID is " + member.memberId + " and IPAddress is " + conn.getInetAddress().toString().replaceAll("/","")) + System.getProperty("line.separator") );
+            writeIPAddressIps.write( (conn.getInetAddress().toString().replaceAll("/","")) + System.getProperty("line.separator") );
+            writeIPAddressTxT.close();
+            writeIPAddressIps.close();
+            
+        // do the ip ban command
+        String command = "sudo ./fwall";
+        Runtime runtime = Runtime.getRuntime();
+        try {
+        Process process = runtime.exec(command, null, new File("//home/msoy//Desktop//blockip"));
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        
+        } //end if statement
+        
+        } catch (IOException e) {
+        // we're not going to output anything, just leave it.
+        }
+         
         // check to see whether this account has been banned or if this is a first time user
         // logging in from a tainted machine
         try {
@@ -354,7 +385,7 @@ public class MsoyAuthenticator extends Authenticator
         } catch (ServiceException se) {
             checkBan(se, member.memberId);
         }
-
+        
         // validate the account locally
         rdata.warning = checkWarnAndBan(member.memberId);
 

@@ -20,6 +20,7 @@ import com.threerings.presents.dobj.AttributeChangedEvent;
 
 import com.threerings.text.TextFieldUtil;
 
+import com.threerings.flex.CommandButton;
 import com.threerings.flex.CommandLinkButton;
 import com.threerings.flex.FlexUtil;
 
@@ -107,8 +108,12 @@ public class HeaderBar extends HBox
         _owner.styleName = "headerBox";
         _owner.percentHeight = 100;
 
+	_closeBox = new HBox();		
+        _closeBox.styleName = "headerCloseBox";
+
         if (!_ctx.getMsoyClient().getEmbedding().isMinimal()) {
             addChild(_owner);
+	    addChild(_closeBox);
         }
 
         _ctx.getUIState().addEventListener(UIState.STATE_CHANGE, handleUIStateChange);
@@ -116,6 +121,7 @@ public class HeaderBar extends HBox
 
         // configure some bits if we're embedded
         const embedded :Boolean = _ctx.getMsoyClient().isEmbedded();
+	setCompVisible(_closeBox, !embedded);
 
         // add a coins display
         if (embedded) {
@@ -245,6 +251,8 @@ public class HeaderBar extends HBox
     protected var _spacer :HBox;
 
     protected var _visibles :Dictionary = new Dictionary(true);
+
+    protected var _closeBox :HBox;    
 
     protected var _tabs :ChatTabBar;
 

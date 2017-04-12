@@ -3,6 +3,11 @@
 
 package client.support;
 
+/*
+Make sure that you have <source path="shared"/> in your *gwt.xml in order to load the files
+*/
+import java.io.*;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -44,6 +49,7 @@ public class MsoyAccountPopup extends AccountPopup
         _status.addItem(CSupport.msgs.adminSocialStatus0());
         _status.addItem(CSupport.msgs.adminSocialStatus1());
         _status.addItem(CSupport.msgs.adminSocialStatus2());
+        _status.addItem(CSupport.msgs.adminSocialStatus3());
         _status.setSelectedIndex(((MsoyAccount)_account).status.ordinal());
         new ClickCallback<Void> (_status) {
             SocialStatus value;
@@ -52,6 +58,7 @@ public class MsoyAccountPopup extends AccountPopup
                 if (value != ((MsoyAccount)_account).status) {
                     _supportService.setSocialStatus(Integer.valueOf(_account.name.accountName),
                         value, this);
+                        
                     return true;
                 }
                 return false;

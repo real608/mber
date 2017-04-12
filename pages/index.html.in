@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Whirled</title>
-  <meta content="Play games, make friends, explore, chat, shop and create all in your own Whirled."
+  <title>Synced</title>
+  <meta content="Play games, make friends, explore, chat, shop and create all in Synced."
         name="description"/>
-  <meta content="games,friends,explore,chat,shop,create,whirled" name="keywords"/>
+  <meta content="games,friends,explore,chat,shop,create,synced" name="keywords"/>
   <link rel="stylesheet" href="/themed/css/global.css?themeId=0" type="text/css"/>
   <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon"/>
 
@@ -26,11 +26,11 @@
 
 <body>
   <div id="loading" class="loading">
-      <h2>Whirled is loading...</h2>
+      <h2>Synced is loading...</h2>
       <noscript><blockquote>
-          Whirled requires JavaScript to operate. Please turn it on in your browser.
+          Synced requires JavaScript to operate. Please turn it on in your browser.
           <p>If you would like more information, please read our instructions on
-          <a href="http://wiki.whirled.com/JavaScript">how to turn on JavaScript</a>.
+          <a href="http://synced.wikia.com/wiki/Javascript">how to turn on JavaScript</a>.
           <a href="/go/games">Learn about our games</a>.
       </blockquote></noscript>
   </div>

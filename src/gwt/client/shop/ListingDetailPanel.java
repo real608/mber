@@ -188,14 +188,21 @@ public class ListingDetailPanel extends BaseItemDetailPanel
         _details.add(new ItemBuyPanel(_listing, null));
 
         // display a comment interface below the listing details
-        final CommentsPanel comments = new CommentsPanel(
-            CommentType.forItemType(_item.getType()), listing.catalogId, true);
-        comments.addAttachHandler(new AttachEvent.Handler() {
-            public void onAttachOrDetach (AttachEvent event) {
-                if (!comments.isLoaded()) comments.expand();
-            }
-        });
-        addTabBelow("Comments", comments, false);
+        CommentsPanel comments = new CommentsPanel(
+ 	                CommentType.forItemType(_item.getType()), listing.catalogId, true);
+        comments.expand();
+        addTabBelow("Comments", comments, true);
+        
+        //Remove unneccessary comment clicking to load
+        
+        //final CommentsPanel comments = new CommentsPanel(
+            //CommentType.forItemType(_item.getType()), listing.catalogId, true);
+        //comments.addAttachHandler(new AttachEvent.Handler() {
+            //public void onAttachOrDetach (AttachEvent event) {
+                //if (!comments.isLoaded()) comments.expand();
+           // }
+        //});
+        //addTabBelow("Comments", comments, false);
 
 //         // if this item supports sub-items, add a tab for those item types
 //         byte[] types = _item.getSalableSubTypes();

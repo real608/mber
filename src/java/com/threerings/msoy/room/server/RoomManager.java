@@ -475,7 +475,8 @@ public class RoomManager extends SpotSceneManager
                 // This should never happen
                 throw new InvocationException(InvocationCodes.E_ACCESS_DENIED);
             }
-            // modifyDJ(who, audioItemId, add, listener);
+            //Enable DJ System
+            modifyDJ(who, audioItemId, add, listener);
         }
     }
 
@@ -868,6 +869,11 @@ public class RoomManager extends SpotSceneManager
     public void rateTrack (ClientObject caller, int audioId, boolean like)
     {
         final MemberObject who = _locator.requireMember(caller);
+        
+         if ( who.isPermaguest() == true ) {
+         return; // Do not allow Guests to rate.
+         }
+         
         if (_roomObj.track == null || audioId != _roomObj.track.audio.itemId) {
             return; // The track has changed since the client made this request
         }
@@ -2600,13 +2606,13 @@ public class RoomManager extends SpotSceneManager
     protected static final int MAX_MOBS_PER_GAME = 99;
 
     /** The maximum number of songs in the playlist. */
-    protected static final int MAX_PLAYLIST_SIZE = 1;
+    protected static final int MAX_PLAYLIST_SIZE = 99;
 
     /** The number of DJ-ed tracks stored after being played. */
     protected static final int TRACK_HISTORY_SIZE = 10;
 
     /** The max number of DJs allowed in a room. */
-    protected static final int DJ_LIMIT = 4;
+    protected static final int DJ_LIMIT = 6;
 
     /** The puppet oid. Global, immutable. */
     protected static final Integer PUPPET_OID = Integer.valueOf(0);

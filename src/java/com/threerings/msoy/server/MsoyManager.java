@@ -29,7 +29,7 @@ import com.threerings.crowd.chat.server.ChatProvider;
 import com.threerings.web.gwt.ServiceException;
 
 import com.threerings.msoy.admin.data.CostsConfigObject;
-// import com.threerings.msoy.admin.server.ABTestLogic;
+import com.threerings.msoy.admin.server.ABTestLogic;
 import com.threerings.msoy.admin.server.RuntimeConfig;
 import com.threerings.msoy.badge.data.BadgeType;
 import com.threerings.msoy.badge.data.all.EarnedBadge;
@@ -92,12 +92,12 @@ public class MsoyManager
         final String template = isGame ? "shareGameInvite" : "shareRoomInvite";
         // username is their authentication username which is their email address
         final String from = memObj.username.toString();
-        // for (final String recip : emails) {
-        //     // this just passes the buck to an executor, so we can call it from the dobj thread
-        //     _mailer.sendTemplateEmail(
-        //         MailSender.By.HUMAN, recip, from, template, "inviter", memObj.memberName,
-        //         "name", placeName, "message", message, "link", url);
-        // }
+        for (final String recip : emails) {
+            // this just passes the buck to an executor, so we can call it from the dobj thread
+            _mailer.sendTemplateEmail(
+                MailSender.By.HUMAN, recip, from, template, "inviter", memObj.memberName,
+                "name", placeName, "message", message, "link", url);
+        }
         cl.requestProcessed();
     }
 
@@ -107,28 +107,27 @@ public class MsoyManager
     {
         final MemberObject memObj = _locator.requireMember(caller);
         final VisitorInfo vinfo = memObj.visitorInfo;
-        listener.requestProcessed(0);
-        // _invoker.postUnit(new PersistingUnit("getABTestGroup", listener) {
-        //     @Override public void invokePersistent () throws Exception {
-        //         _testGroup = _testLogic.getABTestGroup(test, vinfo, logEvent);
-        //     }
-        //     @Override public void handleSuccess () {
-        //         reportRequestProcessed(_testGroup);
-        //     }
-        //     protected Integer _testGroup;
-        // });
+        _invoker.postUnit(new PersistingUnit("getABTestGroup", listener) {
+            @Override public void invokePersistent () throws Exception {
+                _testGroup = _testLogic.getABTestGroup(test, vinfo, logEvent);
+            }
+            @Override public void handleSuccess () {
+                reportRequestProcessed(_testGroup);
+            }
+            protected Integer _testGroup;
+        });
     }
 
     // from interface MemberProvider
     public void trackTestAction (ClientObject caller, final String test, final String action)
     {
-        // final MemberObject memObj = _locator.requireMember(caller);
-        // final VisitorInfo vinfo = memObj.visitorInfo;
-        // _invoker.postUnit(new WriteOnlyUnit("trackTestAction") {
-        //     @Override public void invokePersist () throws Exception {
-        //         _testLogic.trackTestAction(test, action, vinfo);
-        //     }
-        // });
+        final MemberObject memObj = _locator.requireMember(caller);
+        final VisitorInfo vinfo = memObj.visitorInfo;
+        _invoker.postUnit(new WriteOnlyUnit("trackTestAction") {
+            @Override public void invokePersist () throws Exception {
+                _testLogic.trackTestAction(test, action, vinfo);
+            }
+        });
     }
 
     // from interface MemberProvider
@@ -188,8 +187,16 @@ public class MsoyManager
         throws InvocationException
     {
         final MemberObject member = _locator.requireMember(caller);
-        final int baseCost = _runtime.getCoinCost(CostsConfigObject.BROADCAST_BASE);
-        final int increment = _runtime.getCoinCost(CostsConfigObject.BROADCAST_INCREMENT);
+	final int baseCost;
+        final int increment;
+	if (member.tokens.isSubscriberPlus()) { //if the player is a subscriber+ we will divide his or her cost to broadcast by half
+        baseCost = _runtime.getCoinCost(CostsConfigObject.BROADCAST_BASE) /2;
+        increment = _runtime.getCoinCost(CostsConfigObject.BROADCAST_INCREMENT) /2;
+	} else {
+	baseCost = _runtime.getCoinCost(CostsConfigObject.BROADCAST_BASE);
+        increment = _runtime.getCoinCost(CostsConfigObject.BROADCAST_INCREMENT);
+	}
+	
         final int memberId = member.getMemberId();
         final Name from = member.getVisibleName();
         _invoker.postUnit(new ServiceUnit("purchaseBroadcast", listener) {
@@ -203,8 +210,11 @@ public class MsoyManager
 
                 // check for a price change
                 PriceQuote newQuote = secureBroadcastQuote(memberId, baseCost, increment);
-                if (!newQuote.isPurchaseValid(Currency.COINS, authedCost, 0 /* unused exrate */)) {
+                if (!newQuote.isPurchaseValid(Currency.COINS, authedCost, 0 /* unused exrate */) && !member.tokens.isSubscriberPlus()) {
                     _newQuote = newQuote;
+                    return;
+                } else if (!newQuote.isPurchaseValid(Currency.COINS, authedCost/2, 0 /* unused exrate */) && member.tokens.isSubscriberPlus()){
+                 _newQuote = newQuote;
                     return;
                 }
                 // buy it!
@@ -214,7 +224,7 @@ public class MsoyManager
                     new BuyOperation<Void>() {
                         public Void create (boolean magicFree, Currency currency, int amountPaid)
                             throws ServiceException
-      {
+						{
                             _moneyRepo.noteBroadcastPurchase(memberId, amountPaid, message);
                             return null;
                         }
@@ -251,7 +261,7 @@ public class MsoyManager
 
     // dependencies
     @Inject protected @MainInvoker Invoker _invoker;
-    // @Inject protected ABTestLogic _testLogic;
+    @Inject protected ABTestLogic _testLogic;
     @Inject protected ChatProvider _chatprov;
     @Inject protected MailSender _mailer;
     @Inject protected MemberRepository _memberRepo;

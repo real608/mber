@@ -44,6 +44,9 @@ import com.threerings.msoy.web.gwt.WebCreds;
 import com.threerings.msoy.web.gwt.WebMemberService;
 import com.threerings.msoy.web.gwt.WebMemberServiceAsync;
 
+import com.threerings.msoy.server.persist.MemberRepository;
+import com.threerings.msoy.server.MemberLogic;
+
 import client.imagechooser.ImageChooserPopup;
 import client.item.ShopUtil;
 import client.person.GalleryActions;
@@ -229,6 +232,24 @@ public class ProfileBlurb extends Blurb
                             MsoyUI.info("Sent");
                         }
                     });
+                }
+            }));
+        }   
+        //Block Button: Checks if it's not yourself, you're not blocking a support, and this person is NOT blocked
+        if (!isMe && _profile.role != WebCreds.Role.SUPPORT && !(_memberRepo.isMuted(CShell.getMemberId(), _name.getId()) ) ) {
+            _buttons.add(new Button("Block Player", new ClickHandler() {
+                public void onClick (ClickEvent event) {
+                _memberLogic.setMuted(CShell.getMemberId(), _name.getId(), true); //Mute the wall owner.              
+                MsoyUI.info("This player has been successfully blocked.");
+                }
+            }));
+        }
+        //Unblock Button: Checks if it's not yourself, you're not unblocking a support, and this person IS blocked
+        if (!isMe && _profile.role != WebCreds.Role.SUPPORT && (_memberRepo.isMuted(CShell.getMemberId(), _name.getId()) ) ) {
+            _buttons.add(new Button("Unblock Player", new ClickHandler() {
+                public void onClick (ClickEvent event) {
+                _memberLogic.setMuted(CShell.getMemberId(), _name.getId(), false); //Mute the wall owner.              
+                MsoyUI.info("This player has been successfully unblocked.");
                 }
             }));
         }
@@ -549,6 +570,8 @@ public class ProfileBlurb extends Blurb
     protected static final DynamicLookup _dmsgs = GWT.create(DynamicLookup.class);
     protected static final ProfileServiceAsync _profilesvc = GWT.create(ProfileService.class);
     protected static final WebMemberServiceAsync _membersvc = GWT.create(WebMemberService.class);
-
     protected static final long YEAR_MILLIS = (365L * 24L * 60L * 60L * 1000L);
+    
+    protected MemberRepository _memberRepo;
+    protected MemberLogic _memberLogic;
 }

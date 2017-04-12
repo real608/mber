@@ -16,6 +16,7 @@ import com.threerings.msoy.client.MsoyController;
 import com.threerings.msoy.data.MsoyUserOccupantInfo;
 import com.threerings.msoy.room.data.MemberInfo;
 import com.threerings.msoy.room.data.PuppetName;
+import com.threerings.msoy.data.MsoyTokenRing;
 
 public class MsoyNameLabel extends Sprite
 {
@@ -43,6 +44,7 @@ public class MsoyNameLabel extends Sprite
     {
         setName(info.username.toString());
         setSubscriber((info is MsoyUserOccupantInfo) && MsoyUserOccupantInfo(info).isSubscriber());
+        setStaff((info is MsoyUserOccupantInfo) && MsoyUserOccupantInfo(info).isSupport());
         setStatus(info.status, (info is MemberInfo) && MemberInfo(info).isAway(), false,
             (info.username is PuppetName));
     }
@@ -75,7 +77,27 @@ public class MsoyNameLabel extends Sprite
             }
         }
     }
+     /**
+     * Set whether we're displaying a staff member
+     */
+    public function setStaff (staff :Boolean) :void
+    {
+        if (staff == (_staffIcon == null)) {
+            if (staff) {
+                _staffIcon = new GlowSprite();
+                _staffIcon.addChild(new STAFF());
+                _staffIcon.init(0xFFFFFF, MsoyController.STAFF);
+                addChild(_staffIcon);
+                _label.x = _staffIcon.width;
 
+            } else {
+                removeChild(_staffIcon);
+                _staffIcon = null;
+                _label.x = 0;
+            }
+        }
+    }
+    
     /**
      * Updates our member's status (idle, disconnected, etc.).
      */
@@ -107,11 +129,16 @@ public class MsoyNameLabel extends Sprite
     protected var _label :TextField;
 
     protected var _subscriberIcon :GlowSprite;
+    protected var _staffIcon :GlowSprite;
 
     protected static const FORMAT :TextFormat =
         TextFieldUtil.createFormat({ font: "_sans", size: 12, letterSpacing: .6 });
 
     [Embed(source="../../../../../../pages/images/ui/clubwhirled.png")]
     protected static const SUBSCRIBER :Class;
+    
+    [Embed(source="../../../../../../pages/images/ui/virtuedev.png")]
+    protected static const STAFF :Class;
+    
 }
 }

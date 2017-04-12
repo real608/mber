@@ -102,7 +102,7 @@ public class BroadcastPanel extends FloatingPanel
     }
 
     protected function gotQuote (quote :PriceQuote, first :Boolean = true) :void
-    {
+    {   
         _buyPanel.setPriceQuote(quote);
         _instructions.text = Msgs.CHAT.get(
             "m.broadcast_instructions_" + (first ? "initial" : "price_change"), quote.getCoins());
@@ -114,9 +114,11 @@ public class BroadcastPanel extends FloatingPanel
             // oops, the price went up, inform the user and keep the dialog open
             // TODO: do something more exciting here
             gotQuote(result, false);
+            repeatTime += 1; //for subscribers only :)
 
-        } else {
+        } else{
             // otherwise, close. The user should see the broadcast as feedback
+            repeatTime = 0;
             close();
         }
     }
@@ -128,16 +130,25 @@ public class BroadcastPanel extends FloatingPanel
 
     protected function processPurchase (currency :Currency, authedAmount :int) :void
     {
+
+        if(_ctx.getTokens().isSubscriberPlus() && repeatTime == 0)
+        {
+ 	authedAmount = authedAmount/2; // make it messed up on purpose
+        } else if (_ctx.getTokens().isSubscriberPlus() && repeatTime == 1)
+        {
+        authedAmount = authedAmount*2; // we'll set it back to normal once the new price is set
+        }
         var finalMsg :String = _msg;
         if (!StringUtil.isBlank(_linkGroup.selectedValue as String)) {
             finalMsg += " " + _linkGroup.selectedValue;
         }
 
         var msoySvc :MsoyService = _ctx.getMsoyClient().requireService(MsoyService) as MsoyService;
+
         msoySvc.purchaseAndSendBroadcast(authedAmount, finalMsg,
             _ctx.resultListener(broadcastSent, MsoyCodes.GENERAL_MSGS, null, _buyPanel));
     }
-
+    protected var repeatTime:Number = 0;
     protected var _msg :String;
     protected var _instructions :Text;
     protected var _buyPanel :BuyPanel;

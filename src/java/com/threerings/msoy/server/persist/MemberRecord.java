@@ -6,9 +6,8 @@ package com.threerings.msoy.server.persist;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import com.samskivert.util.StringUtil;
 import com.samskivert.util.Tuple;
-
+import com.samskivert.util.StringUtil;
 import com.samskivert.depot.Key;
 import com.samskivert.depot.PersistentRecord;
 import com.samskivert.depot.StringFuncs;
@@ -36,7 +35,7 @@ public class MemberRecord extends PersistentRecord
     {
         /** A flag denoting this user as having support privileges. */
         SUPPORT(1 << 0),
-
+     
         /** A flag denoting this user as having admin privileges. */
         ADMIN(1 << 1),
 
@@ -88,9 +87,9 @@ public class MemberRecord extends PersistentRecord
 
         /** Whether this user has completed the DJ whirled tutorial. */
         DJ_TUTORIAL_COMPLETE(1 << 14),
-
-        /** The next unused flag. Copy this and update the bit mask when making a new flag. */
-        UNUSED(1 << 15);
+        
+         /** Whether this user is ip banned */
+        IPBANNED(1 << 15);
 
         public int getBit () {
             return _bit;
@@ -345,7 +344,7 @@ public class MemberRecord extends PersistentRecord
     {
         return isSet(Flag.SUBSCRIBER) || isSet(Flag.SUBSCRIBER_PERMANENT) || isSupport();
     }
-
+    
     /**
      * Returns true if this member has support or higher privileges.
      */
@@ -384,6 +383,14 @@ public class MemberRecord extends PersistentRecord
     public boolean isTroublemaker ()
     {
         return isSet(Flag.TROUBLEMAKER);
+    }
+    
+    /**
+    * Returns true if this member is ip banned
+    */
+    public boolean isIPBanned ()
+    {
+        return isSet(Flag.IPBANNED);
     }
 
     /**

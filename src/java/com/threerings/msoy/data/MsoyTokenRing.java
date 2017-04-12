@@ -22,6 +22,9 @@ public class MsoyTokenRing extends TokenRing
 
     /** Indicates that the user has subscriber privileges. */
     public static final int SUBSCRIBER = (1 << 4);
+    
+    /** Indicates that the user has youtuber privileges. */
+    public static final int YOUTUBE = (1 << 5);
 
     /**
      * Constructs a token ring with the supplied set of tokens.
@@ -75,5 +78,13 @@ public class MsoyTokenRing extends TokenRing
     public boolean isSubscriber ()
     {
         return holdsToken(SUBSCRIBER);
+    }
+    
+     /**
+     * Is this user a youtuber?
+     */
+    public boolean isYoutube ()
+    {
+        return holdsToken(YOUTUBE);
     }
 }

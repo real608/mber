@@ -1,0 +1,16 @@
+Synced Mail: ${subject}
+You received a Synced mail from ${sender}:
+
+#if (${body})
+"${body}"
+
+#end
+To read the message in its entirety and see any attachments, please go to:
+
+${server_url}go/mail
+
+----
+If you no longer wish to receive email when you receive a Synced mail, simply
+log in and configure your email preferences from your account page:
+
+${server_url}go/account-edit

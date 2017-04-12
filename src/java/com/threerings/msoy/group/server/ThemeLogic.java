@@ -221,7 +221,7 @@ public class ThemeLogic
      */
     protected int getThemeCoinCost (MemberRecord mrec)
     {
-        return _runtime.getCoinCost(CostsConfigObject.NEW_THEME_NONSUB);
+        return _runtime.getCoinCost(mrec.isSubscriber() ? CostsConfigObject.NEW_THEME_SUB : CostsConfigObject.NEW_THEME_NONSUB);
 
     }
 

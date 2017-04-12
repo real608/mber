@@ -50,7 +50,7 @@ public class MyWhirled extends FlowPanel
         rbits.add(makeQuickLink("My Blocklist", Pages.PEOPLE, "blocklist"));
         rbits.add(makeQuickLink("My Passport", Pages.ME, "passport"));
         rbits.add(makeQuickLink("Invite Friends", Pages.PEOPLE, "invites"));
-        rbits.add(makeQuickLink("Share Whirled", Pages.PEOPLE, "invites", "links"));
+        rbits.add(makeQuickLink("Share Synced", Pages.PEOPLE, "invites", "links"));
         rbits.add(makeQuickLink("Contests", Pages.ME, "contests"));
 
         FlowPanel feedBox = MsoyUI.createFlowPanel("FeedBox");
@@ -64,11 +64,9 @@ public class MyWhirled extends FlowPanel
         }
         feedBox.add(titleBar);
 
-        // StreamPanel stream = new StreamPanel(data.stream);
-        // stream.expand();
-        // feedBox.add(stream);
-        feedBox.add(MsoyUI.createLabel(
-            "The feed is currently disabled while we investigate performance issues.", null));
+        StreamPanel stream = new StreamPanel(data.stream);
+        stream.expand();
+        feedBox.add(stream);
 
         // promo and news feed on the left, bits and friends on the right
         HorizontalPanel horiz = new HorizontalPanel();

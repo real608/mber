@@ -1,49 +1,131 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Welcome to the First Whirled</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 <!--
-body td {
-  font-family: Arial, Helvetica;
-  font-size: 12px;
+body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background-color: #000000;
+	margin: 0;
+	padding: 0;
+	color: #000;
+	background-image: url(http://vignette3.wikia.nocookie.net/synced/images/5/50/Wiki-background/revision/latest?cb=20160802000650);
 }
+
+/* ~~ Element/tag selectors ~~ */
+ul, ol, dl { /* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right: 15px;
+	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+}
+a img { /* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
+	border: none;
+}
+
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	color: #42413C;
+}
+a:visited {
+	color: #2083B1;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* this group of selectors will give a keyboard navigator the same hover experience as the person using a mouse. */
+	text-decoration: none;
+}
+
+/* ~~ This fixed width container surrounds all other divs ~~ */
+.container {
+	width: 960px;
+	background-color: #FFFFFF;
+	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout */
+}
+
+/* ~~ The header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo. ~~ */
+.header {
+	background-color: #FFFFFF;
+}
+.content {
+
+	padding: 10px 0;
+	width: 900px;
+	float: left;
+}
+
+/* ~~ This grouped selector gives the lists in the .content area space ~~ */
+.content ul, .content ol { 
+	padding: 0 15px 15px 40px; /* this padding mirrors the right padding in the headings and paragraph rule above. Padding was placed on the bottom for space between other elements on the lists and on the left to create the indention. These may be adjusted as you wish. */
+}
+
+/* ~~ The navigation list styles (can be removed if you choose to use a premade flyout menu like Spry) ~~ */
+ul.nav {
+	list-style: none; /* this removes the list marker */
+	border-top: 1px solid #666; /* this creates the top border for the links - all others are placed using a bottom border on the LI */
+	margin-bottom: 15px; /* this creates the space between the navigation on the content below */
+}
+ul.nav li {
+	border-bottom: 1px solid #666; /* this creates the button separation */
+}
+ul.nav a, ul.nav a:visited { /* grouping these selectors makes sure that your links retain their button look even after being visited */
+	padding: 5px 5px 5px 15px;
+	display: block; /* this gives the anchor block properties so it fills out the whole LI that contains it so that the entire area reacts to a mouse click. */
+	width: 160px;  /*this width makes the entire button clickable for IE6. If you don't need to support IE6, it can be removed. Calculate the proper width by subtracting the padding on this link from the width of your sidebar container. */
+	text-decoration: none;
+	background-color: #FFFFFF;
+}
+ul.nav a:hover, ul.nav a:active, ul.nav a:focus { /* this changes the background and text color for both mouse and keyboard navigators */
+	background-color: #000000;
+	color: #FFF;
+}
+
+/* ~~ The footer styles ~~ */
+.footer {
+	padding: 10px 0;
+	background-color: #FFFFFF;
+	position: relative;/* this gives IE6 hasLayout to properly clear */
+	clear: both; /* this clear property forces the .container to understand where the columns end and contain them */
+}
+
 -->
-</style>
-</head>
+</style></head>
+
 <body>
-<table style="width: 800px">
-<tr><td valign="top" style="padding-right: 15px"><img src="images/logo.png"></td>
-<td><b>Whirled Privacy Policy</b>
-        <p>
-          Whirled is operated by Grey Havens, LLC ("Grey Havens"), a not-for-profit
-          organization established to operate and maintain online games which are still loved by
-          their creators but which are no longer financially viable.
+
+<div class="container">
+  <div class="header"><img src="http://vignette4.wikia.nocookie.net/synced/images/8/89/Wiki-wordmark.png/revision/latest?cb=20160801041004" /></a> 
+    <!-- end .header --></div>
+  <div class="content"><br><br>
+          <h3>Synced is operated by Virtue Development ("Virtue Development").</h3>
         </p>
 
         <p>
-          This policy covers how Grey Havens treats personal information that Grey Havens
-          collects and receives, including information related to your past use of Grey Havens
+          This policy covers how Virtue Development treats personal information that Virtue Development
+          collects and receives, including information related to your past use of Virtue Development
           products and services. Personal information is information about you that is personally
           identifiable such as your name, address, email address, or phone number, and that is
           not otherwise publicly available.
         </p>
 
         <p><b>Information Collection and Use</b></p>
-        <p>Grey Havens collects personal information when you register with Grey Havens,
-          when you use Grey Havens products or services, and when you visit Grey Havens pages.
+        <p>Virtue Development collects personal information when you register with Virtue Development,
+          when you use Virtue Development products or services, and when you visit Virtue Development pages.
         </p>
         <p>When you register we ask for information such as your name, email address,
-          birth date, zip code etc. Once you register with Grey Havens and sign in to our
+          birth date, zip code etc. Once you register with Virtue Development and sign in to our
           services, you are not anonymous to us.</p>
-        <p>Grey Havens automatically receives and records information on our server logs from
-          your browser, including your IP address, Grey Havens cookie information, and the page
+        <p>Virtue Development automatically receives and records information on our server logs from
+          your browser, including your IP address, Virtue Development cookie information, and the page
           you request.</p>
-        <p>Grey Havens uses information for the following general purposes:
+        <p>Virtue Development uses information for the following general purposes:
           to customize the content you see, fulfill your requests for products and services,
           improve our services, and contact you.</p>
 
         <p><b>Information Sharing and Disclosure</b></p>
-        <p>Grey Havens does not rent, sell, or share personal information about you with other
+        <p>Virtue Development does not rent, sell, or share personal information about you with other
           people or non-affiliated companies except to provide products or services you've
           requested, when we have your permission, or under the following circumstances:</p>
         <ul>
@@ -51,39 +133,82 @@ body td {
             or exercise our legal rights or defend against legal claims.</li>
           <li> We believe it is necessary to share information in order to investigate, prevent,
             or take action regarding illegal activities, suspected fraud, situations involving
-            potential threats to the physical safety of any person, violations of Grey Havens's
+            potential threats to the physical safety of any person, violations of Virtue Development's
             terms of use, or as otherwise required by law.</li>
-          <li> We transfer information about you if Grey Havens is acquired by or merged with
-            another company. In this event, Grey Havens will notify you before information about
+          <li> We transfer information about you if Virtue Development is acquired by or merged with
+            another company. In this event, Virtue Development will notify you before information about
             you is transferred and becomes subject to a different privacy policy.</li>
         </ul>
 
         <p><b>Cookies</b></p>
-        <p>Grey Havens may set and access Grey Havens cookies on your computer.</p>
+        <p>Virtue Development may set and access Virtue Development cookies on your computer.</p>
 
-        <p><b>Communications from Grey Havens</b></p>
+        <p><b>Communications from Virtue Development</b></p>
         <p>If you provide us with your e-mail address, we may send you e-mail from time to time.
-          All e-mails from Grey Havens will be strictly 'opt-out' communications, and will
+          All e-mails from Virtue Development will be strictly 'opt-out' communications, and will
           include a URL or email address where you can unsubscribe from future mailings.</p>
 
         <p><b>Confidentiality and Security</b></p>
-        <p>Your Grey Havens Account Information is password-protected.</p>
-        <p>In certain areas Grey Havens uses industry-standard SSL encryption to protect data
+        <p>Your Virtue Development Account Information is password-protected.</p>
+        <p>In certain areas Virtue Development uses industry-standard SSL encryption to protect data
           transmissions.</p>
         <p>We take security seriously and make our best efforts to prevent compromise of your
           personal information. In the event of a serious security breach, we will alert our
           registered users.</p>
+          
+         <p><b>Virtue Dev. uses your personal information to operate and improve Synced, and will not give your personal information to third parties except to operate, improve and protect the Service. </b></p>
+          <p>The personal information you provide to us during registration is used for Virtue Dev.' internal purposes only. Virtue Dev. uses the information it collects to learn what you like and to improve the Service. Virtue Dev. will not give any of your personal information to any third party without your express approval except: as reasonably necessary to fulfill your service request, to third- party fulfillment houses, customer support, billing and credit verification services, and the like; to comply with tax and other applicable law; as otherwise expressly permitted by this Agreement or as otherwise authorized by you; to law enforcement or other appropriate third parties in connection with criminal investigations and other investigations of fraud; or as otherwise necessary to protect Virtue Dev., its agents and other users of the Service. Virtue Dev. does not guarantee the security of any of your private transmissions against unauthorized or unlawful interception or access by third parties. Virtue Dev. can (and you authorize Virtue Dev. to) disclose any information about you to private entities, law enforcement agencies or government officials, as Virtue Dev., in its sole discretion, believes necessary or appropriate to investigate or resolve possible problems or inquiries, or as otherwise required by law. If you request any technical support, you consent to Virtue Dev.' remote accessing and review of the computer onto which you load Virtue Dev. Software for purposes of support and debugging. You agree that Virtue Dev. may communicate with you via email and any similar technology for any purpose relating to the Service, the Virtue Dev. Software and any services or software which may in the future be provided by Virtue Dev. or on Virtue Dev.' behalf. You agree to read the disclosures and be bound by the terms of the additional Privacy Policy information posted on our website at Privacy Policy.</p>
+          
+<p><b> Virtue Dev. may observe and record your interaction within the Service, and may share aggregated and other general information (not including your personal information) with third parties.</b></p>
 
+<p>You acknowledge and agree that Virtue Dev., in its sole discretion, may track, record, observe or follow any and all of your interactions within the Service. Virtue Dev. may share general, demographic, or aggregated information with third parties about our user base and Service usage, but that information will not include or be linked to any personal information without your consent.</p>
+
+<p><b> Content Inside Synced may observe and record your interaction with the Service which may be passed to third parties</b></p>
+
+<p>Synced content such as Pets, Toys, Avatars and Games contributed by players may contain software code that, using the Synced APIs, may observe your actions on the service. For example, Pets can react to chat in a room, a Toy could observe your IP address, or a Game could keep a record of when you play. These player-created items may store this information on Synced's servers, or transmit and store it elsewhere on third-party servers. Synced has no control over the use of this information by third parties, and for this reason you should not engage with Synced with the expectation that your interactions with the service are private from third parties. For more detail on what information can be discerned in this way, please consult the Synced API documentation.</p>
+
+<p><b>DISPUTE RESOLUTION</b></p>
+
+<p>If a dispute arises between you and Virtue Dev., our goal is to provide you with a neutral and cost-effective means of resolving the dispute quickly. Accordingly, you and Virtue Dev. agree to resolve any claim or controversy at law or in equity that arises from or relates to this Agreement or our Service (a "Claim") in accordance with one of the subsections below.</p>
+
+<p><b>Governing Law</b></p>
+
+<p>This Agreement and the relationship between you and Virtue Dev. shall be governed in all respects by the laws of the TBA without regard to conflict of law principles or the United Nations Convention on the International Sale of Goods.</p>
+
+<p><b>Forum for Disputes</b></p>
+
+<p>You and Virtue Dev. agree to submit to the exclusive jurisdiction and venue of the courts located in the TBA, except as provided in Subsection 7.3 below regarding optional arbitration. Notwithstanding this, you agree that Virtue Dev. shall still be allowed to apply for injunctive or other equitable relief in any court of competent jurisdiction.</p>
+
+<p><b>Optional Arbitration</b></p>
+
+<p><b>For any Claim, excluding Claims for injunctive or other equitable relief, where the total amount of the award sought is less than ten thousand U.S. Dollars ($10,000.00 USD), the party requesting relief may elect to resolve the Claim in a cost-effective manner through binding non-appearance-based arbitration. A party electing arbitration shall initiate it through an established alternative dispute resolution ("ADR") provider mutually agreed upon by the parties. The ADR provider and the parties must comply with the following rules: (a) the arbitration shall be conducted, at the option of the party seeking relief, by telephone, online, or based solely on written submissions; (b) the arbitration shall not involve any personal appearance by the parties or witnesses unless otherwise mutually agreed by the parties; and (c) any judgment on the award rendered by the arbitrator may be entered in any court of competent jurisdiction.</b></p>
+
+<p><b>Improperly Filed Claims</p></b>
+
+<p>All Claims you bring against Virtue Dev. must be resolved in accordance with this Dispute Resolution Section. All Claims filed or brought contrary to this Dispute Resolution Section shall be considered improperly filed. Should you file a Claim contrary to this Dispute Resolution Section, Virtue Dev. may recover attorneys' fees and costs up to one thousand U.S. Dollars ($1,000.00 USD), provided that Virtue Dev. has notified you in writing of the improperly filed Claim, and you have failed to promptly withdraw the Claim.</p>
+
+<p><b>GENERAL PROVISIONS</b></p>
+
+<p>The Service is controlled and operated by Virtue Dev. from its office in the United States. Virtue Dev. makes no representation that any aspect of the Service is appropriate or available for use in jurisdictions outside of the United States. Those who choose to access the Service from other locations are responsible for compliance with applicable local laws. The Virtue Dev. Software is subject to all applicable export restrictions. You must comply with all export and import laws and restrictions and regulations of any United States or foreign agency or authority relating to the Virtue Dev. Software and its use.</p>
+
+<p>Virtue Dev.' failure to act with respect to a breach by you or others does not waive Virtue Dev.' right to act with respect to that breach or subsequent or similar breaches. No consent or waiver by Virtue Dev. under this Agreement shall be deemed effective unless delivered in a writing signed by a duly appointed officer of Virtue Dev.. All or any of Virtue Dev.' rights and obligations under this Agreement may be assigned to a subsequent owner or operator of the Service in a merger, acquisition or sale of all or substantially all of Virtue Dev.' assets. You may not assign or transfer this Agreement or any or all of your rights hereunder without the prior written consent of Virtue Dev., and any attempt to do so is void. Notwithstanding anything else in this Agreement, no default, delay or failure to perform on the part of Virtue Dev. shall be considered a breach of this Agreement if such default, delay or failure to perform is shown to be due to causes beyond the reasonable control of Virtue Dev.</p>
+
+<p>This Agreement sets forth the entire understanding and agreement between you and Virtue Dev. with respect to the subject matter hereof. The section headings used herein, including descriptive summary sentences at the start of each section, are for convenience only and shall not affect the interpretation of this Agreement. If any provision of this Agreement shall be held by a court of competent jurisdiction to be unlawful, void, or for any reason unenforceable, then in such jurisdiction that provision shall be deemed severable from these terms and shall not affect the validity and enforceability of the remaining provisions.</p>
+
+<p>Virtue Dev. may give notice to you by means of a general notice on our website at http://syncedonline.com, through the Synced Client at or after log-in to your Account, by electronic mail to your e-mail address in our records for your Account, or by written communication sent by first class mail, postage prepaid, or overnight courier to your address on record for your Account. All notices given by you or required under this Agreement shall be faxed to Virtue Dev. Legal Department, Attn: Dispute Resolution, at: TBA; or mailed to us at: TBA.</p>          
+          
         <p><b>Changes to this Privacy Policy</b></p>
-        <p>Grey Havens may update this policy. We will notify you about significant changes in
+        <p>Virtue Development may update this policy. We will notify you about significant changes in
           the way we treat personal information by sending a notice to the email address
-          specified in your Grey Havens account or by placing a prominent notice on our site.</p>
+          specified in your Virtue Development account or by placing a prominent notice on our site.</p>
 
         <p><b>Questions and Suggestions</b></p>
         <p>If you have questions or suggestions, please email us at
-          <a href="mailto:privacy@mithlondgames.org">privacy@mithlondgames.org</a>.</p>
+          <a href="mailto:virtuedevelopment@gmail.com">virtuedevelopment@gmail.com</a>.</p>
+</p>
+</div>
 
-</td></tr>
-</table>
+ <div class="footer">
+</div>
 </body>
 </html>

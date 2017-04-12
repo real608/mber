@@ -9,7 +9,7 @@ public class MsoyAccount extends Account
 {
     public enum SocialStatus
     {
-        NORMAL, GREETER, TROUBLEMAKER;
+        NORMAL, GREETER, TROUBLEMAKER, IPBANNED;
     }
 
     /** The social standing of this user. */

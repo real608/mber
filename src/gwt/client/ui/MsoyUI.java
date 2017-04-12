@@ -573,6 +573,9 @@ public class MsoyUI
         case PERMAGUEST:
             roleName = _cmsgs.roleGuest();
             break;
+        case YOUTUBE:
+            roleName = _cmsgs.roleYoutube();
+             break;
         default:
             roleName = _cmsgs.roleUser();
             break;
@@ -595,6 +598,26 @@ public class MsoyUI
             // Club Whirled is gone, but the icons beside player names remain
             icon = new Label();
             icon.addStyleName("clubWhirledIcon");
+            break;
+         case YOUTUBE:
+            // Use the Club Whirled Icon for Youtubers for now...
+            icon = new Label();
+            icon.addStyleName("clubWhirledIcon");
+            break;
+        case ADMIN:
+            // Admin icon to show for Synced Admins
+            icon = new Label();
+            icon.addStyleName("virtueDevIcon");
+            break;
+        case SUPPORT:
+            // Moderator icon to show for Synced Mods
+            icon = new Label();
+            icon.addStyleName("virtueDevIcon");
+            break; 
+        case MAINTAINER:
+            // Co-Founder icon to show for Synced Co-Founders
+            icon = new Label();
+            icon.addStyleName("virtueDevIcon");
             break;
         }
         if (icon != null) {

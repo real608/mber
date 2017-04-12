@@ -1,0 +1,85 @@
+##
+##############################################
+## Subject line, also used for html
+##############################################
+##
+#if ($subject == "nameNewThings")
+$name: new games, avatars and activity on Synced!
+#elseif ($subject == "nameBusyFriends")
+$name, your friends on Synced have been busy!
+#elseif ($subject == "newsFeedAndNewThings")
+Synced news feed, new avatars, and games!
+#elseif ($subject == "friendFeedAndNewThings")
+Synced friend feed, new avatars, and games!
+#else
+What you've been missing on Synced, $name!
+#end
+Check out what's been happening on Synced!
+${server_url}
+##
+##############################################
+## New games
+##############################################
+##
+
+New & Popular Games
+#foreach ($game in $games)
+  * $game.name
+    $server_url#games-d_$game.gameId
+
+#end
+  See more games on Synced:
+  $server_url#games
+##
+##############################################
+## New avatars
+##############################################
+##
+
+New & Popular Avatars
+#foreach ($avi in $avatars)
+  * $avi.name
+    $server_url#shop-l_5_$avi.catalogId
+
+#end
+  See more avatars on Synced:
+  $server_url#shop-5_7_
+##
+##############################################
+## Friend threads
+##############################################
+##
+#if ($threads)
+
+New Forum Posts From Your Friends
+#foreach ($thread in $threads)
+  * $thread.subject
+    $thread.firstUnreadURL
+
+#end
+  See the full list here:
+  $server_url#groups-friends
+#end
+##
+##############################################
+## News feed
+##############################################
+##
+#if ($feed)
+
+Your News Feed
+#foreach ($cat in $feed)
+#if ($cat.items.size() > 0)
+
+  $cat.CategoryName
+#foreach ($item in $cat.items)
+    * $item.PlainText
+#end
+#end
+#end
+
+  You can also see this feed on your Synced home page here:
+  $server_url#me
+#end
+
+Come on back and get in the game!

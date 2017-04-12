@@ -82,12 +82,8 @@ public class MeServlet extends MsoyServiceServlet
         // }
 
         // include all our active promotions
-        if (false) {
-            data.promos = Lists.newArrayList(
-                Iterables.transform(_promoRepo.loadActivePromotions(), PromotionRecord.TO_PROMOTION));
-        } else {
-            data.promos = Lists.newArrayList();
-        }
+        data.promos = Lists.newArrayList(
+              Iterables.transform(_promoRepo.loadActivePromotions(), PromotionRecord.TO_PROMOTION));
 
         // if (PROFILING_ENABLED) {
         //     _profiler.swap("friends");
@@ -105,7 +101,7 @@ public class MeServlet extends MsoyServiceServlet
         // }
 
         // load the eligible greeters
-        if (false) {
+
             HashSet<Integer> greeterIds = new HashSet<Integer>(
                 _memberMan.getPPSnapshot().getOnlineGreeters());
             greeterIds.remove(mrec.memberId);
@@ -117,9 +113,7 @@ public class MeServlet extends MsoyServiceServlet
 
             // load cards
             data.greeters = _mhelper.resolveMemberCards(shortList, true, null);
-        } else {
-            data.greeters = Lists.newArrayList();
-        }
+
 
         // shuffle to avoid greeter fighting (shortList is sorted, thus the cards are too)
         Collections.shuffle(data.greeters);
@@ -128,22 +122,19 @@ public class MeServlet extends MsoyServiceServlet
         //     _profiler.swap("forums");
         // }
 
-        if (false) {
+
             Set<Integer> groupIds = _groupLogic.getMemberGroupIds(mrec.memberId);
             data.updatedThreads = _forumRepo.countUnreadThreads(mrec.memberId, groupIds);
-        }
+
 
         // if (PROFILING_ENABLED) {
         //     _profiler.swap("stream");
         // }
 
-        if (false) {
-            data.stream = _feedLogic.loadStreamActivity(mrec.memberId, System.currentTimeMillis(),
-                                                        MyWhirledData.STREAM_PAGE_LENGTH);
-        } else {
-            data.stream = new ExpanderResult<Activity>();
-            data.stream.page = Lists.newArrayList();
-        }
+
+       data.stream = _feedLogic.loadStreamActivity(mrec.memberId, System.currentTimeMillis(),
+            MyWhirledData.STREAM_PAGE_LENGTH);
+
 
         // if (PROFILING_ENABLED) {
         //     _profiler.exit(null);
@@ -220,36 +211,36 @@ public class MeServlet extends MsoyServiceServlet
         data.medals = Maps.newHashMap();
         data.officialGroups = Lists.newArrayList();
         Map<Integer, Award> medals = Maps.newHashMap();
-        // for (EarnedMedalRecord earnedMedalRec : _medalRepo.loadEarnedMedals(memberId)) {
-        //     Award medal = new Award();
-        //     medal.awardId = earnedMedalRec.medalId;
-        //     medal.whenEarned = earnedMedalRec.whenEarned.getTime();
-        //     medals.put(earnedMedalRec.medalId, medal);
-        // }
+         for (EarnedMedalRecord earnedMedalRec : _medalRepo.loadEarnedMedals(memberId)) {
+             Award medal = new Award();
+             medal.awardId = earnedMedalRec.medalId;
+             medal.whenEarned = earnedMedalRec.whenEarned.getTime();
+             medals.put(earnedMedalRec.medalId, medal);
+         }
 
         // flesh out the details from the MedalRecord
-        // Map<Integer, List<Award>> groupMedals = Maps.newHashMap();
-        // for (MedalRecord medalRec : _medalRepo.loadMedals(medals.keySet())) {
-        //     Award medal = medals.get(medalRec.medalId);
-        //     medal.name = medalRec.name;
-        //     medal.description = medalRec.description;
-        //     medal.icon = medalRec.createIconMedia();
+         Map<Integer, List<Award>> groupMedals = Maps.newHashMap();
+         for (MedalRecord medalRec : _medalRepo.loadMedals(medals.keySet())) {
+             Award medal = medals.get(medalRec.medalId);
+             medal.name = medalRec.name;
+             medal.description = medalRec.description;
+             medal.icon = medalRec.createIconMedia();
 
-        //     List<Award> medalList = groupMedals.get(medalRec.groupId);
-        //     if (medalList == null) {
-        //         groupMedals.put(medalRec.groupId, medalList = Lists.newArrayList());
-        //     }
-        //     medalList.add(medal);
-        // }
+            List<Award> medalList = groupMedals.get(medalRec.groupId);
+             if (medalList == null) {
+                 groupMedals.put(medalRec.groupId, medalList = Lists.newArrayList());
+             }
+             medalList.add(medal);
+         }
 
-        // // finally get the group names and the officialness of each group.
-        // for (GroupRecord groupRec : _groupRepo.loadGroups(groupMedals.keySet())) {
-        //     GroupName groupName = groupRec.toGroupName();
-        //     data.medals.put(groupName, groupMedals.get(groupRec.groupId));
-        //     if (groupRec.official) {
-        //         data.officialGroups.add(groupName);
-        //     }
-        // }
+         // finally get the group names and the officialness of each group.
+         for (GroupRecord groupRec : _groupRepo.loadGroups(groupMedals.keySet())) {
+             GroupName groupName = groupRec.toGroupName();
+             data.medals.put(groupName, groupMedals.get(groupRec.groupId));
+             if (groupRec.official) {
+                 data.officialGroups.add(groupName);
+             }
+         }
 
         return data;
     }

@@ -26,6 +26,12 @@ public class ParlorGameOccupantInfo extends WhirledGameOccupantInfo
     {
         return _subscriber;
     }
+    
+    // from MsoyUserOccupantInfo
+    public function isSupport () :Boolean
+    {
+        return false;
+    }
 
     override public function clone () :Object
     {

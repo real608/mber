@@ -81,6 +81,14 @@ public class CShell
     {
         return (creds != null) && creds.isSubscriber();
     }
+    
+     /**
+     * Returns true if we're logged in and are a youtuber
+     */
+    public static boolean isYoutube ()
+    {
+        return (creds != null) && creds.isYoutube();
+    }
 
     /**
      * Returns true if we're logged in and have support+ privileges.

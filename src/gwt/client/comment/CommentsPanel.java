@@ -81,10 +81,10 @@ public class CommentsPanel extends ExpanderWidget<Activity>
             insert(_commentControls, 0);
         }
     }
-
-    public boolean isLoaded () {
-        return !_loadingMessage.isAttached();
-    }
+    //Remove unneccessary comment clicking to load
+    //public boolean isLoaded () {
+        //return !_loadingMessage.isAttached();
+   // }
 
     protected void addControls ()
     {
@@ -451,11 +451,11 @@ public class CommentsPanel extends ExpanderWidget<Activity>
     protected Widget _loadingMessage;
 
     protected DeleteClickCallback _batchDelete;
-
+    
+     protected boolean _rated;
+     protected Button _post;
+      
     protected Panel _commentControls = new HorizontalPanel();
-
-    protected boolean _rated;
-    protected Button _post;
 
     protected static final ShellMessages _cmsgs = GWT.create(ShellMessages.class);
     protected static final CommentServiceAsync _commentsvc = GWT.create(CommentService.class);

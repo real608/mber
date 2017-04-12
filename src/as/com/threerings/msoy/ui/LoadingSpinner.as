@@ -87,8 +87,8 @@ public class LoadingSpinner extends Sprite
         }
 
         if (_status != null) {
-            if (_spinner.currentFrame < 102) {
-                _spinner.gotoAndPlay(102);
+            if (_spinner.currentFrame < 76) {
+                _spinner.gotoAndPlay(76);
             }
             _label.text = _status;
 

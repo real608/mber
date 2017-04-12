@@ -1217,7 +1217,19 @@ public class WorldController extends MsoyController
                 } else {
                     followItems.push({ label: Msgs.GENERAL.get("b.follow_other"),
                         callback: handleRespondFollow, arg: memId, enabled: !isMuted });
-                }
+                } 
+                
+                //A silent follow button for Admins/Moderators
+                if ((isSupport) && !isPuppet){
+                    if(name.equals(us.following)){
+                        followItems.push({ label: Msgs.GENERAL.get("b.stop_following"),
+                        callback: handleRespondFollow, arg: 0 });
+                } else {
+                        //TODO: Make no message appear when clicking the Follow this player (Agent) button
+                        followItems.push({ label: Msgs.GENERAL.get("b.follow_other_agent"),
+                        callback: handleRespondFollow, arg: memId, enabled: !isMuted });
+                 }
+                 
                 // and/or they could be following us...
                 if (us.followers.containsKey(memId)) {
                     followItems.push({ label: Msgs.GENERAL.get("b.ditch_follower"),

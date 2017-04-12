@@ -104,7 +104,7 @@ public class StatusPanel extends SmartTable
 
         boolean permaguest = MemberMailUtil.isPermaguest(_creds.accountName);
 
-        // mail, name, help, sign out in a box at top
+        // privacy, mail, name, help, sign out in a box at top
         FlowPanel links = MsoyUI.createFlowPanel("Links");
         if (!permaguest) {
             links.add(_mail);
@@ -113,6 +113,10 @@ public class StatusPanel extends SmartTable
             links.add(_namePanel);
             links.add(MsoyUI.createLabel("|", "Spacer"));
         }
+        //Purchase
+        links.add(Widgets.newHTML("<a href=\"/purchase.html\" target=\"_blank\">+</a>"));
+        links.add(MsoyUI.createLabel("|", "Spacer"));
+        //Purchase
         links.add(Link.create(_cmsgs.statusHelp(), Pages.HELP));
         links.add(MsoyUI.createLabel("|", "Spacer"));
         if (permaguest) {
@@ -153,7 +157,7 @@ public class StatusPanel extends SmartTable
         getFlexCellFormatter().setVerticalAlignment(0, 2, HasAlignment.ALIGN_TOP);
         getFlexCellFormatter().setHorizontalAlignment(0, 2, HasAlignment.ALIGN_CENTER);
 
-        // coins, bars, level on bottom
+        // donate, coins, bars, level on bottom
         setWidget(1, 0, _levels, 0);
         getFlexCellFormatter().setHorizontalAlignment(1, 0, HasAlignment.ALIGN_RIGHT);
     }
@@ -196,8 +200,10 @@ public class StatusPanel extends SmartTable
     {
         public LevelsDisplay () {
             super("Levels", 0, 0);
-
+            
             int idx = 0;
+            
+            //Coins Alignment
             FloatPanel coins = new FloatPanel("Coins");
             coins.add(new Image(Currency.COINS.getSmallIcon()));
             coins.add(_coinsLabel = new Label("0"));
@@ -205,6 +211,7 @@ public class StatusPanel extends SmartTable
             coinsFocus.addClickHandler(NaviUtil.onViewTransactions(ReportType.COINS));
             setWidget(0, idx++, coinsFocus);
 
+            //Levels Alignment
             FloatPanel level = new FloatPanel("Level");
             level.add(new Image("/images/header/symbol_level.png"));
             level.add(_levelLabel = new Label("0"));

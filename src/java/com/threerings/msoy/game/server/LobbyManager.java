@@ -179,9 +179,8 @@ public class LobbyManager
         try {
             table = _tableMgr.createTable(player, tconfig, config);
         } catch (InvocationException ie) {
-            log.warning("Failed to create play now table [who=" + player.who() +
+            log.warning("Play now table will be unstable... [who=" + player.who() +
                         ", error=" + ie.getMessage() + "].");
-            return false;
         }
 
         // if this is a party or seated continuous game, we need to tell the player to head
@@ -189,7 +188,7 @@ public class LobbyManager
         if (_lobj.gameDef.match.getMatchType() != ParlorGameConfig.SEATED_GAME) {
             ParlorSender.gameIsReady(player, table.gameOid);
         }
-        return true;
+        return true; //we'll force the game to work!
     }
 
     /**

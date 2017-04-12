@@ -242,10 +242,13 @@ public abstract class BuyPanel<T> extends SmartTable
             horiz.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
 
             horiz.add(MsoyUI.createLabel((amount > 0) ? _msgs.buy() : _msgs.buyFree(), null));
-            horiz.add(WidgetUtil.makeShim(_currency == Currency.BARS ? 10 : 5, 1));
-            horiz.add(MsoyUI.createImage(_currency.getLargeIcon(), null));
-            horiz.add(WidgetUtil.makeShim(_currency == Currency.BARS ? 10 : 5, 1));
-            horiz.add(MsoyUI.createLabel(_currency.format(amount), null));
+            
+	    if (amount > 0) {
+		horiz.add(WidgetUtil.makeShim(_currency == Currency.BARS ? 10 : 5, 1));
+        	horiz.add(MsoyUI.createImage(_currency.getLargeIcon(), null));
+        	horiz.add(WidgetUtil.makeShim(_currency == Currency.BARS ? 10 : 5, 1));
+        	horiz.add(MsoyUI.createLabel(_currency.format(amount), null));
+	    }
 
             setContent(horiz);
         }

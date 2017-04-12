@@ -1216,7 +1216,7 @@ public class MoneyLogic
                 listingPayout = totalPayout.amount - payoutSum;
             }
 
-            if (listingPayout > 0) {
+            if (listingPayout >= 0) {
                 Map<Integer, CurrencyAmount> result = Maps.newHashMap();
                 divvies.add(result);
 
@@ -1230,12 +1230,11 @@ public class MoneyLogic
                     payoutSum += computePayoutsForListing(
                         result, listing.item.creatorId, totalPayout.currency, listingPayout);
                 }
-
             } else {
-                log.warning("Payout or cost too small for divvying", "totalCost", totalCost,
-                    "listingPortion", listing.cost - lastCost, "totalPayout", totalPayout,
-                    "itemType", listing.item.getType(), "catalogId", listing.catalogId);
-                throw new ServiceException(MoneyCodes.E_INTERNAL_ERROR);
+               log.warning("Payout or cost too small for divvying", "totalCost", totalCost,
+               "listingPortion", listing.cost - lastCost, "totalPayout", totalPayout,
+               "itemType", listing.item.getType(), "catalogId", listing.catalogId, "listingPayout ", listingPayout);
+               throw new ServiceException(MoneyCodes.E_INTERNAL_ERROR);
             }
 
             lastCost = listing.cost;

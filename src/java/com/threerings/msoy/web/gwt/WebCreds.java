@@ -22,7 +22,7 @@ public class WebCreds
     public static enum Role
         implements IsSerializable
     {
-        PERMAGUEST, REGISTERED, SUBSCRIBER, SUPPORT, ADMIN, MAINTAINER
+        PERMAGUEST, REGISTERED, YOUTUBE, SUBSCRIBER, SUPPORT, ADMIN, MAINTAINER
     };
 
     /** Our session token. */
@@ -120,7 +120,13 @@ public class WebCreds
     {
         return roleAtLeast(Role.REGISTERED);
     }
-
+     /**
+     * Returns true if this user is a youtuber (or better).
+     */
+    public boolean isYoutube ()
+    {
+        return roleAtLeast(Role.YOUTUBE);
+    }
     /**
      * Returns true if this member is a subscriber (or better).
      */

@@ -160,12 +160,16 @@ public class StuffPanel extends FlowPanel
 
     protected boolean shouldDisplayUpload (MsoyItemType type)
     {
-        // for now, if you're in a theme, there is no uploading of stuff
-        if (CShell.frame.getThemeId() != 0 && !type.isUsableAnywhere()) {
+        // for now, if you're in a theme or unvalidated, there is no uploading of stuff
+	if ( ( CShell.frame.getThemeId() != 0 && !type.isUsableAnywhere() ) || CShell.isValidated() == false ) {
             // TODO: we should have Buy but not Upload, punt!
             return false;
         }
-        return type.isUploadableType();
+       if (type == MsoyItemType.LAUNCHER) {
+        // TODO: we should have Buy but not Upload, punt!
+        return false;
+        }
+        return type.isShopType();
     }
 
     protected void createUploadInterface ()

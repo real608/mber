@@ -65,7 +65,10 @@ public class MsoyGameInfoProvider extends GameInfoProvider
                 status = MsoyAccount.SocialStatus.TROUBLEMAKER;
             } else if (member.isGreeter()) {
                 status = MsoyAccount.SocialStatus.GREETER;
-            } else {
+            } else if (member.isIPBanned()) {
+                status = MsoyAccount.SocialStatus.IPBANNED;
+            }
+            else {
                 status = MsoyAccount.SocialStatus.NORMAL;
             }
             ((MsoyAccount)account).status = status;

@@ -1,5 +1,6 @@
 //
 // $Id$
+//LOCATION: src/gwt/client/room/SceneUtil.java
 
 package client.room;
 
@@ -54,19 +55,11 @@ public class SceneUtil
         FlowPanel panel = new FlowPanel();
         panel.addStyleName("sceneView");
         panel.add(MediaUtil.createMediaView(snapshot, MediaDescSize.SNAPSHOT_FULL_SIZE, null));
-
-        PushButton liveButton = MsoyUI.createImageButton("liveButton", new ClickHandler() {
-            public void onClick (ClickEvent event) {
-                container.clear();
-                FeaturedPlaceUtil.displayFeaturedPlace(sceneId, container);
-            }
-        });
-
+        
         PushButton enterButton = MsoyUI.createImageButton("enterButton",
             Link.createHandler(Pages.WORLD, "s" + sceneId));
 
         panel.add(enterButton);
-        panel.add(liveButton);
         container.setWidget(panel);
 
         return container;
