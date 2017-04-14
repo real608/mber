@@ -55,11 +55,13 @@ else {
 		   while (!feof($fh))
 		{
 			$readresp = fgets ($fh, 1024);
-			if (strcmp ($readresp, "VERIFIED") == 0) 
+			if ($payment_status == "Completed") 
 			{
-			   //Success! The purchase was validated. Let's send the post vars to the BillingSuccess.php
-				
-//set POST variables
+			   //Success! The purchase was validated. Let's send the post vars to the BillingSuccess.php only once.
+			   $payment_status = "Paid_Once"; //the code will no longer loop the database update
+
+$fields_string;
+
 $fields = array(
                   'item' => urlencode($item),
                   'playerid' => urlencode($playerid),
@@ -73,7 +75,7 @@ rtrim($fields_string, '&');
 $ch = curl_init();
 
 //set the url, number of POST vars, POST data
-curl_setopt($ch,CURLOPT_URL, 'http://syncedonline.com:82/BillingSuccess.php');
+curl_setopt($ch,CURLOPT_URL, 'http://www.syncedonline.com:82/BillingSuccess.php');
 curl_setopt($ch,CURLOPT_POST, count($fields));
 curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
 
@@ -85,7 +87,8 @@ curl_close($ch);
 
 			} else if (strcmp ($readresp, "INVALID") == 0) 
 			{
-				//A hacking attempt?
+				//Failed attempt, or we're done with updating the database.
+				
 			}
 		}
 fclose ($fh);

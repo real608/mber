@@ -5,6 +5,8 @@
    $port        = "port=DATABASEPORTHERE";
    $dbname      = "dbname=DATABASENAMEHERE";
    $credentials = "user=USERHERE password=PASSWORDHERE";
+   $sql 		= "";
+   $current_time = strtotime("now"); //current time variable
    
 // Open database
    $db = pg_connect( "$host $port $dbname $credentials"  );
