@@ -16,8 +16,8 @@
       echo "Opened database successfully.\n";
    }
 
-  $item 			= $_POST['item']; //example: 25bars
-  $playerid 		= $_POST['playerid']; //example: 5345
+  $item 		= mysql_real_escape_string(stripslashes($_POST['item'])); //example: 25bars
+  $playerid 		= mysql_real_escape_string(stripslashes($_POST['playerid'])); //example: 5345
 				
 if($item == "10bars")
 {
