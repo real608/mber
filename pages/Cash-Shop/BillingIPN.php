@@ -1,20 +1,5 @@
 <?php
-
-//Connection Variables
-   $host        = "host=DATABASEHOSTHERE";
-   $port        = "port=DATABASEPORTHERE";
-   $dbname      = "dbname=DATABASENAMEHERE";
-   $credentials = "user=USERHERE password=PASSWORDHERE";
-   
-//Open database
-   $db = pg_connect( "$host $port $dbname $credentials"  );
-   if(!$db){
-      echo "Error : Unable to open database.\n";
-   } else {
-      echo "Opened database successfully.\n";
-   }
-   
-// PayPal's notification
+// PayPal's notification (This program is in the billing page)
 
 header('HTTP/1.1 200 OK');
 
@@ -39,7 +24,7 @@ foreach ($_POST as $parm => $var)
   $payer_email      = $_POST['payer_email'];
   $record_id	 	= $_POST['custom'];
   $purchase    		= explode("_", $item_name, 2); //split item_name into two strings
-  
+
   $item 			= $purchase[0]; //example: 25bars
   $playerid 		= $purchase[1]; //example: 5345
  
@@ -72,93 +57,32 @@ else {
 			$readresp = fgets ($fh, 1024);
 			if (strcmp ($readresp, "VERIFIED") == 0) 
 			{
-				$current_time = strtotime("now"); //current time variable in case we're purchasing a subscription
-				//Payment notification was both genuine and verified!	
+			   //Success! The purchase was validated. Let's send the post vars to the BillingSuccess.php
 				
-if($item == "10bars")
-{
-      $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 10 where "memberId"=$playerid;
-EOF;
-} else if($item == "25bars")
-{
-	  $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 25 where "memberId"=$playerid;
-EOF;
-} else if($item == "60bars")
-{
-	  $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 60 where "memberId"=$playerid;
-EOF;
-} else if($item == "115bars")
-{
-	  $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 115 where "memberId"=$playerid;
-EOF;
-} else if($item == "220bars")
-{
-	  $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 220 where "memberId"=$playerid;
-EOF;
-} else if($item == "330bars")
-{
-	  $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 330 where "memberId"=$playerid;
-EOF;
-} else if($item == "440bars")
-{
-	  $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 440 where "memberId"=$playerid;
-EOF;
-} else if($item == "550bars")
-{
-	  $sql =<<<EOF
-      UPDATE "MemberAccountRecord" set bars = bars + 550 where "memberId"=$playerid;
-EOF;
-} else if($item == "1month")
-{
-   $subscribe_time = date("Y-m-d", strtotime("+1 month", $current_time)); //1 month
-   
-   $sql =<<<EOF
-      INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
-      UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
-EOF;
-} else if($item == "3month")
-{
-   $subscribe_time = date("Y-m-d", strtotime("+3 month", $current_time)); //3 months
-   
-   $sql =<<<EOF
-      INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
-      UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
-EOF;
-} else if($item == "6month")
-{
-   $subscribe_time = date("Y-m-d", strtotime("+1 month", $current_time)); //6 months
-   
-   $sql =<<<EOF
-      INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
-      UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
-EOF;
-} else if($item == "12month")
-{
-   $subscribe_time = date("Y-m-d", strtotime("+12 month", $current_time)); //12 months
-   
-   $sql =<<<EOF
-      INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
-      UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
-EOF;
-}
-				
-				//Update the sql query
-				$ret = pg_query($db, $sql);
-				if(!$ret){
-				echo pg_last_error($db);
-				exit;
-				} else {
-				echo "Record updated successfully\n";
-				}
-				
-			  pg_close($db); //close the database
+//set POST variables
+$fields = array(
+                  'item' => urlencode($item),
+                  'playerid' => urlencode($playerid),
+                );
+
+//url-ify the data for the POST
+foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+rtrim($fields_string, '&');
+
+//open connection
+$ch = curl_init();
+
+//set the url, number of POST vars, POST data
+curl_setopt($ch,CURLOPT_URL, 'http://syncedonline.com:82/BillingSuccess.php');
+curl_setopt($ch,CURLOPT_POST, count($fields));
+curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+//execute post
+$result = curl_exec($ch);
+
+//close connection
+curl_close($ch);
+
 			} else if (strcmp ($readresp, "INVALID") == 0) 
 			{
 				//A hacking attempt?
