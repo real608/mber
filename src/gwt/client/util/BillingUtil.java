@@ -86,8 +86,7 @@ public class BillingUtil
      */
     public static String getAbsoluteBillingURL (String path)
     {
-        return BASE + path + ((path.indexOf("?") == -1) ? "?" : "&") +
-        "initUsername=" + URL.encodeComponent(CShell.creds.accountName);
+        return "http://www.syncedonline.com/billing.html";
     }
 
     /**

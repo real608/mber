@@ -25,8 +25,7 @@ public class BuyPanel extends VBox
         _bars = new BuyButton(Currency.BARS, cmdOrFn, arg);
         _coins = new BuyButton(Currency.COINS, cmdOrFn, arg);
         _getBars = new CommandLinkButton(Msgs.GENERAL.get("b.get_bars"), MsoyController.VIEW_URL,
-            DeploymentConfig.billingURL + "whirled.wm?initUsername=" +
-            encodeURIComponent(ctx.getClient().getClientObject().username.toString()));
+            DeploymentConfig.billingURL);
         _getBars.styleName = "underLink";
 
         _barPanel = new VBox();
