@@ -114,7 +114,7 @@ public class StatusPanel extends SmartTable
             links.add(MsoyUI.createLabel("|", "Spacer"));
         }
         //Purchase
-        links.add(Widgets.newHTML("<a href=\"/purchase.html\" target=\"_blank\">+</a>"));
+        links.add(Link.create("+", Pages.BILLING));
         links.add(MsoyUI.createLabel("|", "Spacer"));
         //Purchase
         links.add(Link.create(_cmsgs.statusHelp(), Pages.HELP));
