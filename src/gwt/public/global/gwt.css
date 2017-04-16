@@ -1,5 +1,6 @@
 /**
  * CSS styles shared by all GWT stuff.
+ * LOCATION: msoy/src/gwt/public/global/gwt.css
  */
 
 img, embed, applet, object {
@@ -1057,6 +1058,10 @@ img, embed, applet, object {
 
 .clubWhirledIcon {
   background: url(/images/ui/clubwhirled.png);
+}
+
+.virtueDevIcon {
+  background: url(/images/ui/virtuedev.png);
 }
 
 .creatorBy {
