@@ -34,7 +34,7 @@
 			urlRequest.data  = paypalRequest.getUrlVariables();
 			urlRequest.method = URLRequestMethod.POST;
 			
-			navigateToURL( urlRequest , "_self" );
+			navigateToURL( urlRequest , "_blank" );
 		}
 	}
 
