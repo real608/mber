@@ -19,12 +19,10 @@ The Whirled code (forked to make Synced) is released under the BSD License. See 
 [Errors]:
 - Parlor Games
 - Party Glitch (Probably an error with a .properties file)
+- Subscribers don't have reduced group fees and the fees are calculated via coins in the admin panel still?
 
 [Implement]:
-- Paypal IPN (Shadowsych's job)
-- Bars and Bling (TWSI's Job)
-- Bars Billing Page 
-For Shadowsych: Make sure to have surveys and videos for players. Some good survey and video providers are: SuperRewards, Matomy, TokenAds, Pesona.ly, SuperSonic, and SponsorPay. Also, re-do the entire billing-page code and make sure to integrate it with the IPN.
+- Music can no longer be listed in bars
 
 [Distant Future]:
 - HTML5 Creations
