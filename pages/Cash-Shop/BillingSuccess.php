@@ -66,6 +66,7 @@ EOF;
    $sql =<<<EOF
       INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
       UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
+	  UPDATE "MemberAccountRecord" set bars = bars + 10 where "memberId"=$playerid;
 EOF;
 } else if($item == "3month")
 {
@@ -74,6 +75,7 @@ EOF;
    $sql =<<<EOF
       INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
       UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
+	  UPDATE "MemberAccountRecord" set bars = bars + 20 where "memberId"=$playerid;
 EOF;
 } else if($item == "6month")
 {
@@ -82,6 +84,7 @@ EOF;
    $sql =<<<EOF
       INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
       UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
+	  UPDATE "MemberAccountRecord" set bars = bars + 45 where "memberId"=$playerid;
 EOF;
 } else if($item == "12month")
 {
@@ -90,6 +93,7 @@ EOF;
    $sql =<<<EOF
       INSERT INTO "BarscriptionRecord" ("memberId",expires) VALUES ($playerid, '$subscribe_time');
       UPDATE "MemberRecord" set flags = 4096 where "memberId"=$playerid;
+	  UPDATE "MemberAccountRecord" set bars = bars + 100 where "memberId"=$playerid;
 EOF;
 }
 				
