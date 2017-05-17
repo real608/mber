@@ -103,10 +103,15 @@ public class CommentsPanel extends ExpanderWidget<Activity>
         int ownerId = Integer.parseInt(ownerIdString); // owner of profile wall id as an integer
         
         if(_etype.forProfileWall() && CShell.getMemberId() == ownerId){
-        _enableFriendComments = new Button("Allow Friends Only?");
-        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for friends only?", [DO SET FLAG COMMAND HERE]);                
+        _enableFriendComments = new Button("Commenting Privileges");
+        
+        if([FLAG FOR PUBLIC COMMENTING IS SET]){
+        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for friends only?", enableFriendsComments() );
+        } else if([FLAG FOR PRIVATE COMMENTING IS SET]){
+        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for the public?", enablePublicComments() );
+        }     
         _commentControls.add(_enableFriendComments);
-        }
+        } //end the friend enabling of profile comments code
 
         if (commentsCanBeBatchDeleted()) {
             _commentControls.add(WidgetUtil.makeShim(7, 1));
@@ -120,6 +125,16 @@ public class CommentsPanel extends ExpanderWidget<Activity>
     public void showPostPopup ()
     {
         showPostPopup(null);
+    }
+    
+    public void enableFriendsComments()
+    {
+    
+    }
+    
+    public void enablePublicComments()
+    {
+    
     }
 
     public void showPostPopup (Comment subject)
