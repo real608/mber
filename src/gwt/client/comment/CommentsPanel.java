@@ -27,6 +27,7 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Window.Location;
 
 import com.threerings.orth.data.MediaDescSize;
 
@@ -94,6 +95,18 @@ public class CommentsPanel extends ExpanderWidget<Activity>
             }
         });
         _commentControls.add(_post);
+        
+        //allow friend enabling of profile comments: we can check if the member posting is the owner of the wall by looking at the profile URL id
+        String pageURL = Window.Location.getHref();
+        String[] URLParts = pageURL.split("-");
+        String ownerIdString = URLParts[1]; // owner of profile wall id as a string
+        int ownerId = Integer.parseInt(ownerIdString); // owner of profile wall id as an integer
+        
+        if(_etype.forProfileWall() && CShell.getMemberId() == ownerId){
+        _enableFriendComments = new Button("Allow Friends Only?");
+        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for friends only?", [DO SET FLAG COMMAND HERE]);                
+        _commentControls.add(_enableFriendComments);
+        }
 
         if (commentsCanBeBatchDeleted()) {
             _commentControls.add(WidgetUtil.makeShim(7, 1));
@@ -454,6 +467,7 @@ public class CommentsPanel extends ExpanderWidget<Activity>
     
      protected boolean _rated;
      protected Button _post;
+     protected Button _enableFriendComments;
       
     protected Panel _commentControls = new HorizontalPanel();
 
