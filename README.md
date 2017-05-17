@@ -19,7 +19,7 @@ The Whirled code (forked to make Synced) is released under the BSD License. See 
 [Errors]:
 - Parlor Games
 - Party Glitch (Probably an error with a .properties file)
-- Subscribers don't have reduced group fees and the fees are calculated via coins in the admin panel still?
+- Add an option in which players can only allow friends to comment on their walls
 
 [Implement]:
 - Music can no longer be listed in bars
