@@ -136,6 +136,7 @@ public class MemberRecord extends PersistentRecord
     public static final ColumnExp<String> NAME = colexp(_R, "name");
     public static final ColumnExp<String> PERMA_NAME = colexp(_R, "permaName");
     public static final ColumnExp<Integer> HOME_SCENE_ID = colexp(_R, "homeSceneId");
+    public static final ColumnExp<Boolean> COMMENT_PREFERENCE = colexp(_R, "commentPreference");
     public static final ColumnExp<Integer> AVATAR_ID = colexp(_R, "avatarId");
     public static final ColumnExp<Integer> THEME_GROUP_ID = colexp(_R, "themeGroupId");
     public static final ColumnExp<Date> CREATED = colexp(_R, "created");
