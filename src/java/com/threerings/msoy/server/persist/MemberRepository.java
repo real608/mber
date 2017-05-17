@@ -721,6 +721,14 @@ public class MemberRepository extends DepotRepository
         // permaName will be a non-null lower-case string
         updatePartial(MemberRecord.getKey(memberId), MemberRecord.PERMA_NAME, permaName);
     }
+    
+     /**
+     * Configures a member's comment preference
+     */
+    public void configureCommentPreference (int memberId, boolean friendsOnly)
+    {
+        updatePartial(MemberRecord.getKey(memberId), MemberRecord.COMMENT_PREFERENCE, friendsOnly);
+    }
 
     /**
      * Writes the supplied member's flags to the database.
@@ -925,7 +933,7 @@ public class MemberRepository extends DepotRepository
     {
         return (null != load(MuteRecord.getKey(muterId, muteeId)));
     }
-
+    
     /**
      * Removes all member ids from the give recipient list that have muted the given sender. This
      * can be used to filter the sending of player-to-player bulk mail messages.
