@@ -315,6 +315,17 @@ public class ProfileServlet extends MsoyServiceServlet
         // store the supplied interests in the repository; blank interests will be deleted
         _profileRepo.storeInterests(memberId, interests);
     }
+    
+    // from interface ProfileService
+    public void updateCommentPreference (int memberId, boolean allowFriendsOnly)
+        throws ServiceException
+    {
+        final MemberRecord _memberRec = _memberRepo.loadMember(memberId);
+        
+        //update the comment preference from the database
+        _memberRepo.configureCommentPreference(memberId, allowFriendsOnly);
+    }
+    
 
     // from interface ProfileService
     public List<MemberCard> findProfiles (final String search)
