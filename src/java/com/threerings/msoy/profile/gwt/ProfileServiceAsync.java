@@ -30,6 +30,11 @@ public interface ProfileServiceAsync
      * The async version of {@link ProfileService#updateInterests}.
      */
     void updateInterests (int memberId, List<Interest> interests, AsyncCallback<Void> callback);
+    
+     /**
+     * The async version of {@link ProfileService#updateCommentPreference}.
+     */
+    void updateCommentPreference (int memberId, boolean allowFriendsOnly, AsyncCallback<Void> callback);
 
     /**
      * The async version of {@link ProfileService#findProfiles}.
