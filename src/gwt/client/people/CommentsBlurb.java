@@ -13,6 +13,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 
 import com.threerings.gwt.ui.WidgetUtil;
 import com.threerings.gwt.util.ExpanderResult;
@@ -67,28 +69,36 @@ public class CommentsBlurb extends Blurb
 
         //allow friend enabling of profile comments: we can check if the member posting is the owner of the wall by looking at the profile URL id 
         if (CShell.getMemberId() == _name.getId()) {
-	     _commentControls.add(WidgetUtil.makeShim(7, 1));
-        Button _enableFriendComments = new Button("Commenting Privileges");    
 
-        if(true){
-        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for friends only?", enableFriendsComments()) );
-        } else if(false){
-        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for the public?", enablePublicComments()) );
-        }     
+        Button _enableFriendComments = new Button("Friend Commenting");
+	new ClickCallback<Void>(_enableFriendComments) {
+		 protected boolean callService() {
+_profilesvc.updateCommentPreference(CShell.getMemberId(), true, this);
+		MsoyUI.info("Only friends may comment on your wall now.");
+return true;}
+		 protected boolean gotResult (Void result){
+	return true;
+   }
+};
+
+        Button _enablePublicComments = new Button("Public Commenting");
+	new ClickCallback<Void>(_enablePublicComments) {
+		 protected boolean callService() {
+_profilesvc.updateCommentPreference(CShell.getMemberId(), false, this);
+		MsoyUI.info("The public may comment on your wall now.");
+return true;}
+		 protected boolean gotResult (Void result){
+	return true;
+   }
+};
+	_commentControls.add(WidgetUtil.makeShim(7, 1));   
         _commentControls.add(_enableFriendComments);
+	_commentControls.add(WidgetUtil.makeShim(7, 1));
+ 	_commentControls.add(_enablePublicComments);
         } //end the friend enabling of profile comments code
 
     }
 
-    public Command enableFriendsComments()
-    {
-    	return null;
-    }
-    
-    public Command enablePublicComments()
-    {
-    	return null;
-    }
         @Override
         protected Widget createElement (Activity activity)
         {
