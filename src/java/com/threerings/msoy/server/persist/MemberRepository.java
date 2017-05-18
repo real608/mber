@@ -727,7 +727,8 @@ public class MemberRepository extends DepotRepository
      */
     public void configureCommentPreference (int memberId, boolean friendsOnly)
     {
-        updatePartial(MemberRecord.getKey(memberId), MemberRecord.COMMENT_PREFERENCE, friendsOnly);
+        MemberRecord mrec = loadMember(memberId);
+	mrec.updateFlag(MemberRecord.Flag.FRIEND_COMMENTS_ONLY, friendsOnly);
     }
 
     /**
