@@ -49,6 +49,7 @@ import com.threerings.msoy.web.gwt.MemberCard;
 import com.threerings.msoy.web.gwt.Pages;
 import com.threerings.msoy.web.gwt.ServiceCodes;
 import com.threerings.msoy.web.server.MsoyServiceServlet;
+import com.threerings.msoy.data.all.Friendship;
 
 import static com.threerings.msoy.Log.log;
 
@@ -119,8 +120,19 @@ public class CommentServlet extends MsoyServiceServlet
         } else if (etype.forProfileWall()) {
             MemberRecord wallOwner = _memberRepo.loadMember(eid);
             ownerId = eid;
+            
+            if(! (_memberRepo.isMuted(wallOwner.memberId, mrec.memberId)) ) { //Check if the player is NOT muted by the muter
             feedType = FeedMessageType.SELF_PROFILE_COMMENT;
             feedArgs = ImmutableList.of((Object) ownerId, wallOwner.name);
+            } else {
+            return null;
+            }
+	
+	   //check if the player only allows friend commenting and the person commenting is not friend
+	   if(wallOwner.isSet(MemberRecord.Flag.FRIEND_COMMENTS_ONLY) && (_memberRepo.getFriendship(wallOwner.memberId, mrec.memberId) == Friendship.NOT_FRIENDS || _memberRepo.getFriendship(mrec.memberId, wallOwner.memberId) == Friendship.NOT_FRIENDS))
+           { 
+		return null;
+	   }
 
         // comment on an item
         } else  if (etype.isItemType()) {
