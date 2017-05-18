@@ -729,6 +729,7 @@ public class MemberRepository extends DepotRepository
     {
         MemberRecord mrec = loadMember(memberId);
 	mrec.updateFlag(MemberRecord.Flag.FRIEND_COMMENTS_ONLY, friendsOnly);
+	storeFlags(mrec);
     }
 
     /**
