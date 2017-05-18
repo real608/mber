@@ -27,7 +27,6 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.Window.Location;
 
 import com.threerings.orth.data.MediaDescSize;
 
@@ -82,10 +81,10 @@ public class CommentsPanel extends ExpanderWidget<Activity>
             insert(_commentControls, 0);
         }
     }
-    //Remove unneccessary comment clicking to load
-    //public boolean isLoaded () {
-        //return !_loadingMessage.isAttached();
-   // }
+
+    public boolean isLoaded () {
+        return !_loadingMessage.isAttached();
+    }
 
     protected void addControls ()
     {
@@ -95,23 +94,6 @@ public class CommentsPanel extends ExpanderWidget<Activity>
             }
         });
         _commentControls.add(_post);
-        
-        //allow friend enabling of profile comments: we can check if the member posting is the owner of the wall by looking at the profile URL id
-        String pageURL = Window.Location.getHref();
-        String[] URLParts = pageURL.split("-");
-        String ownerIdString = URLParts[1]; // owner of profile wall id as a string
-        int ownerId = Integer.parseInt(ownerIdString); // owner of profile wall id as an integer
-        
-        if(_etype.forProfileWall() && CShell.getMemberId() == ownerId){
-        _enableFriendComments = new Button("Commenting Privileges");
-        
-        if([FLAG FOR PUBLIC COMMENTING IS SET]){
-        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for friends only?", enableFriendsComments() );
-        } else if([FLAG FOR PRIVATE COMMENTING IS SET]){
-        _enableFriendComments.addClickHandler(new PromptPopup("Would you like to make your profile comments for the public?", enablePublicComments() );
-        }     
-        _commentControls.add(_enableFriendComments);
-        } //end the friend enabling of profile comments code
 
         if (commentsCanBeBatchDeleted()) {
             _commentControls.add(WidgetUtil.makeShim(7, 1));
@@ -125,16 +107,6 @@ public class CommentsPanel extends ExpanderWidget<Activity>
     public void showPostPopup ()
     {
         showPostPopup(null);
-    }
-    
-    public void enableFriendsComments()
-    {
-    
-    }
-    
-    public void enablePublicComments()
-    {
-    
     }
 
     public void showPostPopup (Comment subject)
@@ -479,12 +451,11 @@ public class CommentsPanel extends ExpanderWidget<Activity>
     protected Widget _loadingMessage;
 
     protected DeleteClickCallback _batchDelete;
-    
-     protected boolean _rated;
-     protected Button _post;
-     protected Button _enableFriendComments;
-      
+
     protected Panel _commentControls = new HorizontalPanel();
+
+    protected boolean _rated;
+    protected Button _post;
 
     protected static final ShellMessages _cmsgs = GWT.create(ShellMessages.class);
     protected static final CommentServiceAsync _commentsvc = GWT.create(CommentService.class);
