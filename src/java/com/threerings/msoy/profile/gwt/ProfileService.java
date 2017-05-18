@@ -145,7 +145,7 @@ public interface ProfileService extends RemoteService
         throws ServiceException;
         
      /**
-     * Updates the calling user's interests.
+     * Updates the user's comment preference (public or friends only)
      */
     void updateCommentPreference (int memberId, boolean allowFriendsOnly)
         throws ServiceException;
