@@ -143,6 +143,12 @@ public interface ProfileService extends RemoteService
      */
     void updateInterests (int memberId, List<Interest> interests)
         throws ServiceException;
+        
+     /**
+     * Updates the calling user's interests.
+     */
+    void updateCommentPreference (int memberId, boolean allowFriendsOnly)
+        throws ServiceException;
 
     /**
      * Looks for profiles that match the specified search term. We'll aim to be smart about what we
