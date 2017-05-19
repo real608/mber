@@ -129,7 +129,7 @@ public class CommentServlet extends MsoyServiceServlet
             }
 	
 	   //check if the player only allows friend commenting and the person commenting is not friend
-	   if(wallOwner.isSet(MemberRecord.Flag.FRIEND_COMMENTS_ONLY) && (_memberRepo.getFriendship(wallOwner.memberId, mrec.memberId) == Friendship.NOT_FRIENDS || _memberRepo.getFriendship(mrec.memberId, wallOwner.memberId) == Friendship.NOT_FRIENDS))
+	   if(wallOwner.isSet(MemberRecord.Flag.FRIEND_COMMENTS_ONLY) && (_memberRepo.getFriendship(wallOwner.memberId, mrec.memberId) == Friendship.NOT_FRIENDS || _memberRepo.getFriendship(mrec.memberId, wallOwner.memberId) == Friendship.NOT_FRIENDS) && wallOwner.memberId != mrec.memberId)
            { 
 		return null;
 	   }
