@@ -84,11 +84,6 @@ public class MsoyAuthenticator extends Authenticator
                 throw new ServiceException(MsoyAuthCodes.SERVER_ERROR);
             }
             account.firstLogon = (mrec.sessions == 0);
-            
-            //if the member does NOT have a validated email, then show him/her a message stating to validate before trying to login
-            if(!mrec.isValidated()){
-                throw new ServiceException(MsoyAuthCodes.UNVALIDATED_EMAIL);
-            }
 
             // validate that they can logon from the domain
             try {
@@ -381,6 +376,11 @@ public class MsoyAuthenticator extends Authenticator
         
         } catch (IOException e) {
         // we're not going to output anything, just leave it.
+        }
+		
+		//if the member does NOT have a validated email and is NOT a guest, then show him/her a message stating to validate before trying to login
+        if(!member.isValidated() && !member.isPermaguest()){
+            throw new ServiceException("Sorry, you need to validate your email in order to play Synced  -  make sure to check your spam mail! \nIf you want to re-send the validation mail, then go to this link: \nhttp://www.syncedonline.com/#account-edit");
         }
          
         // check to see whether this account has been banned or if this is a first time user
