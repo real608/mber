@@ -19,6 +19,9 @@ public interface GwtAuthCodes
 
     /** A code indicating that the user has been temporarily banned from the server. */
     public static final String TEMP_BANNED = "m.temp_banned";
+    
+    /** A code indicating that the user needs to validate their email. */
+    public static final String UNVALIDATED_EMAIL = "m.unvalidated";
 
     /** A code indicating that the machine is tainted and no new accounts will be able to logon
      * from it. */
