@@ -84,6 +84,11 @@ public class MsoyAuthenticator extends Authenticator
                 throw new ServiceException(MsoyAuthCodes.SERVER_ERROR);
             }
             account.firstLogon = (mrec.sessions == 0);
+            
+            //if the member does NOT have a validated email, then show him/her a message stating to validate before trying to login
+            if(!mrec.isValidated()){
+                throw new ServiceException(MsoyAuthCodes.UNVALIDATED_EMAIL);
+            }
 
             // validate that they can logon from the domain
             try {
