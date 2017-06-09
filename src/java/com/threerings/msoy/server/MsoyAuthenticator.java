@@ -378,10 +378,12 @@ public class MsoyAuthenticator extends Authenticator
         // we're not going to output anything, just leave it.
         }
 		
-		//if the member does NOT have a validated email and is NOT a guest, then show him/her a message stating to validate before trying to login
-        if(!member.isValidated() && !member.isPermaguest()){
-            throw new ServiceException("Sorry, you need to validate your email in order to play Synced  -  make sure to check your spam mail! \nIf you want to re-send the validation mail, then go to this link: \nhttp://www.syncedonline.com/#account-edit");
-        }
+	//only allow validated and registered members to play the game - also make sure to check if they have a supported email service!
+        if(!member.isValidated() && !member.isPermaguest() && (member.accountName.contains("@aol") || member.accountName.contains("@hotmail") || member.accountName.contains("@live") || member.accountName.contains("@outlook")) ){
+            throw new ServiceException("Sorry, you need to validate your email in order to play Synced! \nIt seems that you have an UNSUPPORTED email service!  (@aol, @hotmail, @live, or @outlook)  Please change your email address at: \nhttp://www.syncedonline.com/#account-edit  \n\nOr you may contact support to validate your account for you: \nhttp://www.syncedonline.com/#help");
+        } else if (!member.isValidated() && !member.isPermaguest()){
+	    throw new ServiceException("Sorry, you need to validate your email in order to play Synced  -  make sure to check your spam mail! \nIf you want to re-send the validation mail, then go to this link: \nhttp://www.syncedonline.com/#account-edit");
+	}
          
         // check to see whether this account has been banned or if this is a first time user
         // logging in from a tainted machine
