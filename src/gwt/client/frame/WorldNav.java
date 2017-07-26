@@ -383,9 +383,11 @@ public class WorldNav
             if (flashArgs.indexOf("&port") == -1) {
                 flashArgs += "&port=" + _defaultPort;
             }
-            if (CShell.getAuthToken() != null) {
-                flashArgs += "&token=" + CShell.getAuthToken();
-            }
+            /**if (CShell.getAuthToken() != null) {
+            *    flashArgs += "&token=" + CShell.getAuthToken();
+            *}
+            *We no longer need this :P
+            */
             if (_minimized) {
                 flashArgs += "&minimized=t";
             }
