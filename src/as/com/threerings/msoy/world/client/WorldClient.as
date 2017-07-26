@@ -434,8 +434,11 @@ public class WorldClient extends MsoyClient
             creds = new WorldCredentials(null, null);
             anonymous = true;
         }
-
-        creds.sessionToken = (token == null) ? params["token"] : token;
+        
+        //creds.sessionToken = (token == null) ? params["token"] : token;
+        
+        creds.sessionToken = (token == null) ? ExternalInterface.call("function getAuth() { var dc = document.cookie; var devprefix = 'devcreds='; var prefix = 'creds='; var begin = dc.indexOf('; ' + devprefix); if (begin == -1) { begin = dc.indexOf(devprefix); if (begin != 0) return null; } else { begin += 2; var end = document.cookie.indexOf(';', begin); if (end == -1) { end = dc.length; }} if(decodeURI(dc.substring(begin + devprefix.length, end)) != null) { return decodeURI(dc.substring(begin + devprefix.length, end)); } var begin = dc.indexOf('; ' + devcreds); if (begin == -1) { begin = dc.indexOf(prefix); if (begin != 0) return null; } else { begin += 2; var end = document.cookie.indexOf(';', begin); if (end == -1) { end = dc.length; } } if(decodeURI(dc.substring(begin + prefix.length, end)) != null) { return decodeURI(dc.substring(begin + prefix.length, end)); } return null; } ") : token;
+        
         creds.themeId = params["themeId"];
         creds.ident = Prefs.getMachineIdent();
         creds.featuredPlaceView = _featuredPlaceView;
