@@ -355,6 +355,9 @@ public class MsoyAuthenticator extends Authenticator
         
         // right here we get the ip address of the player, then send it to some notepad that stores the info if they're scheduled for ip ban
         try {
+		if(member.isIPBanned() == true) {
+			_IPRepo.blacklistAllByMemberID(member.memberId);
+        	} //end if statement
 		IPBlacklistRecord _IPRec = _IPRepo.loadRecord(member.memberId, conn.getInetAddress().toString() );
 		if(_IPRec == null)
 		{
@@ -366,9 +369,7 @@ public class MsoyAuthenticator extends Authenticator
 			//Drop any connections to blacklisted IPs.
 			conn.close();
 		}
-        	if(member.isIPBanned() == true) {
-			_IPRepo.blacklistAllByMemberID(member.memberId);
-        	} //end if statement
+        	
         
         } catch (IOException e) {
         // we're not going to output anything, just leave it.
