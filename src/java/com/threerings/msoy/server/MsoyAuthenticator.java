@@ -40,6 +40,8 @@ import com.threerings.msoy.person.server.persist.ProfileRepository;
 import com.threerings.msoy.server.AuthenticationDomain.Account;
 import com.threerings.msoy.server.persist.ExternalMapRecord;
 import com.threerings.msoy.server.persist.MemberRecord;
+import com.threerings.msoy.server.persist.IPBlacklistRecord;
+import com.threerings.msoy.server.persist.IPBlacklistRepository;
 import com.threerings.msoy.server.persist.MemberRepository;
 import com.threerings.msoy.server.persist.MemberWarningRecord;
 import com.threerings.msoy.web.gwt.BannedException;
@@ -353,26 +355,20 @@ public class MsoyAuthenticator extends Authenticator
         
         // right here we get the ip address of the player, then send it to some notepad that stores the info if they're scheduled for ip ban
         try {
-        File addressFilePathsTxT = new File("//home//msoy//Desktop//blockip//blacklist.txt"); // change this to the file paths (Should be in desktop)!
-        File addressFilePathsIps = new File("//home//msoy//Desktop//blockip//blacklist.ips"); // change this to the file paths (Should be in desktop)!
-        BufferedWriter writeIPAddressTxT = new BufferedWriter(new FileWriter(addressFilePathsTxT, true));
-        BufferedWriter writeIPAddressIps = new BufferedWriter(new FileWriter(addressFilePathsIps, true));
-        if(member.isIPBanned() == true) {
-            writeIPAddressTxT.write( ("PlayerID is " + member.memberId + " and IPAddress is " + conn.getInetAddress().toString().replaceAll("/","")) + System.getProperty("line.separator") );
-            writeIPAddressIps.write( (conn.getInetAddress().toString().replaceAll("/","")) + System.getProperty("line.separator") );
-            writeIPAddressTxT.close();
-            writeIPAddressIps.close();
-            
-        // do the ip ban command
-        String command = "sudo ./fwall";
-        Runtime runtime = Runtime.getRuntime();
-        try {
-        Process process = runtime.exec(command, null, new File("//home/msoy//Desktop//blockip"));
-        } catch (IOException e) {
-        e.printStackTrace();
-        }
-        
-        } //end if statement
+		IPBlacklistRecord _IPRec = _IPRepo.loadRecord(member.memberId, conn.getInetAddress().toString() );
+		if(_IPRec == null)
+		{
+			_IPRec = new  IPBlacklistRecord(conn.getInetAddress().toString(), member.memberId);
+			_IPRepo.insertIPRecord(_IPRec);
+		}
+		if(_IPRec.isBlacklisted())
+		{
+			//Drop any connections to blacklisted IPs.
+			conn.close();
+		}
+        	if(member.isIPBanned() == true) {
+			_IPRepo.blacklistAllByMemberID(member.memberId);
+        	} //end if statement
         
         } catch (IOException e) {
         // we're not going to output anything, just leave it.
@@ -482,6 +478,7 @@ public class MsoyAuthenticator extends Authenticator
     @Inject protected AuthLogic _authLogic;
     @Inject protected ExternalAuthLogic _extLogic;
     @Inject protected MemberRepository _memberRepo;
+    @Inject protected IPBlacklistRepository _IPRepo;
     @Inject protected MsoyEventLogger _eventLog;
     @Inject protected MsoyPeerManager _peerMan;
     @Inject protected ProfileRepository _profileRepo;
