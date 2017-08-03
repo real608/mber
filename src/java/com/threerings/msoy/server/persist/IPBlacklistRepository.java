@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -61,7 +63,13 @@ public class IPBlacklistRepository extends DepotRepository
 		{
 			for (IPBlacklistRecord a : _IPRecs) {
 				
-					a.blacklist()
+					a.blacklist();
+					String s;
+					Process p;
+					try {
+						p = Runtime.getRuntime().exec("sudo ufw deny from" + a.memberIp + "to any");
+						p.destroy();
+					} catch (Exception e) {}
 			}
 			
 		}
