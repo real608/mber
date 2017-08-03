@@ -67,7 +67,7 @@ public class IPBlacklistRepository extends DepotRepository
 					String s;
 					Process p;
 					try {
-						p = Runtime.getRuntime().exec("sudo ufw deny from" + a.memberIp + "to any");
+						p = Runtime.getRuntime().exec("sudo ufw deny from " + a.memberIp + " to any");
 						p.destroy();
 					} catch (Exception e) {}
 			}
