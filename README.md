@@ -23,6 +23,7 @@ The Whirled code (forked to make Synced) is released under the BSD License. See 
 
 [Implement]:
 - Music can no longer be listed in bars
+- Admin Approval System for items that are uploaded to synced.
 
 [Distant Future]:
 - HTML5 Creations
