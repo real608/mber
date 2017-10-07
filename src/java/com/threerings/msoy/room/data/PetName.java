@@ -15,7 +15,10 @@ public class PetName extends Name
 {
     public PetName (String displayName, int petId, int ownerId)
     {
-        super(sanitize(displayName));
+       /**
+        * Call upon the pet and initialize it as a pet in the beginning before putting the name. Just some coding I thought of nothing special about it.
+        */
+        super(sanitize("[Pet] " + displayName));
         _petId = petId;
         _ownerId = ownerId;
     }
@@ -57,6 +60,6 @@ public class PetName extends Name
 
     protected static String sanitize (String name) {
         // $' causes problems with link delimiting, so reject it
-        return name.contains("$'") ? "<redacted>" : name;
+        return name.contains("$'") ? "[Pet] <redacted>" : name;
     }
 }
