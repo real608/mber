@@ -1,5 +1,5 @@
 <?php
-
+	//check if synced online's server is online
     $url = 'http://www.syncedonline.com/';
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_NOBODY, true);
@@ -10,7 +10,7 @@
 	
 	if($_POST['hardReboot'] == "true")
 	{
-		system("/home/desktop/Desktop/stopServer"); // shut down Synced command; we have an automatic script to start it up
+		system("startServer"); //start Synced bash script, an automatic script to start synced
 		exit("offline");
 	}
     
@@ -27,10 +27,10 @@
 		exit("online");
     } else if ($_POST['getServerStatus'] == "true"){
         // server was offline, so we're restarting it
-		system("/home/desktop/Desktop/stopServer"); // shut down Synced command; we have an automatic script to start it up
+		system("startServer"); //start Synced bash script, an automatic script to start synced
 		exit("offline");
     }
-	if (200==$retcode) { //this means we're just loading the php file not in flash
+	if (200==$retcode) { //this means we're just loading the php file not in flash, for security reasons
         // server is already online
 		exit("online");
     } else {
