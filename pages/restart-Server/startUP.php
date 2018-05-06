@@ -10,7 +10,8 @@
 	
 	if($_POST['hardReboot'] == "true")
 	{
-		system("./startServer"); //start Synced bash script, an automatic script to start synced
+		//shut down server, then start it back up
+		shell_exec("sudo fuser -k -n tcp 80 ; sudo /root/msoy/bin/msoyserver");
 		exit("offline");
 	}
     
@@ -27,7 +28,8 @@
 		exit("online");
     } else if ($_POST['getServerStatus'] == "true"){
         // server was offline, so we're restarting it
-		system("./startServer"); //start Synced bash script, an automatic script to start synced
+	    	//shut down server, then start it back up
+		shell_exec("sudo fuser -k -n tcp 80 ; sudo /root/msoy/bin/msoyserver");
 		exit("offline");
     }
 	if (200==$retcode) { //this means we're just loading the php file not in flash, for security reasons
