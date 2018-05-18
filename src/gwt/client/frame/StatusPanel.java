@@ -123,7 +123,7 @@ public class StatusPanel extends SmartTable
             links.add(MsoyUI.createActionLabel(_cmsgs.statusLogon(),
                                                Link.createHandler(Pages.ACCOUNT, "logon")));
         } else {
-            links.add(Widgets.newHTML("<a href=\"/privacy.html\" target=\"_blank\">Privacy</a>"));
+            links.add(Widgets.newHTML("<a href=\"/rules.html\" target=\"_blank\">Rules</a>"));
             links.add(MsoyUI.createLabel("|", "Spacer"));
             links.add(MsoyUI.createActionLabel(_cmsgs.statusLogoff(), new ClickHandler() {
                 public void onClick (ClickEvent event) {
