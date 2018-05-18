@@ -356,10 +356,10 @@ public class MsoyChatDirector extends ChatDirector
         if (_throttle.throttleOpAt(now)) {
             return "e.chat_throttled";
         }
-        // restrict guests from speaking more than 1 thing per minute
+        // restrict guests from speaking
         if( !_mctx.isRegistered() && _guestThrottle.throttleOpAt(now) )
         {
-            return "e.chat_permaguest";
+            return "Sorry, guests are not allowed to speak. Please register an account.";
         }
         // if we allow it, we might also count this message as more than one "op"
         if (message.length > 8) {
@@ -427,8 +427,8 @@ public class MsoyChatDirector extends ChatDirector
 
     /** You may utter 8 things per 5 seconds, but large things count as two. */
     protected var _throttle :Throttle = new Throttle(8, 5000);
-    /** if you're a guest, you may utter 1 thing per a minute. */
-    protected var _guestThrottle :Throttle = new Throttle(1, 60000);
+    /** if you're a guest, you may not speak */
+    protected var _guestThrottle :Throttle = new Throttle(0, 1000);
 
     protected var _chatTabs :ChatTabBar;
     protected var _chatHistory :HistoryList;
