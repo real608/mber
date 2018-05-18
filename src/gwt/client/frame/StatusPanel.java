@@ -104,7 +104,7 @@ public class StatusPanel extends SmartTable
 
         boolean permaguest = MemberMailUtil.isPermaguest(_creds.accountName);
 
-        // privacy, mail, name, help, sign out in a box at top
+        //rules, donate, mail, name, help, sign out in a box at top
         FlowPanel links = MsoyUI.createFlowPanel("Links");
         if (!permaguest) {
             links.add(_mail);
@@ -113,10 +113,8 @@ public class StatusPanel extends SmartTable
             links.add(_namePanel);
             links.add(MsoyUI.createLabel("|", "Spacer"));
         }
-        //Purchase
-        links.add(Link.create("+", Pages.BILLING));
+        links.add(Link.create("Donate", Pages.BILLING));
         links.add(MsoyUI.createLabel("|", "Spacer"));
-        //Purchase
         links.add(Link.create(_cmsgs.statusHelp(), Pages.HELP));
         links.add(MsoyUI.createLabel("|", "Spacer"));
         if (permaguest) {
