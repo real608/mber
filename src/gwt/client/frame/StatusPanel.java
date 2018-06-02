@@ -104,7 +104,7 @@ public class StatusPanel extends SmartTable
 
         boolean permaguest = MemberMailUtil.isPermaguest(_creds.accountName);
 
-        //rules, donate, mail, name, help, sign out in a box at top
+        // rules, client mail, name, help, sign out in a box at top
         FlowPanel links = MsoyUI.createFlowPanel("Links");
         if (!permaguest) {
             links.add(_mail);
@@ -113,16 +113,18 @@ public class StatusPanel extends SmartTable
             links.add(_namePanel);
             links.add(MsoyUI.createLabel("|", "Spacer"));
         }
-        links.add(Link.create("Donate", Pages.BILLING));
-        links.add(MsoyUI.createLabel("|", "Spacer"));
         links.add(Link.create(_cmsgs.statusHelp(), Pages.HELP));
         links.add(MsoyUI.createLabel("|", "Spacer"));
         if (permaguest) {
             links.add(MsoyUI.createActionLabel(_cmsgs.statusLogon(),
                                                Link.createHandler(Pages.ACCOUNT, "logon")));
         } else {
+			links.add(Widgets.newHTML("<a href=\"/client.html\" target=\"_blank\">Client</a>"));
+            links.add(MsoyUI.createLabel("|", "Spacer"));
             links.add(Widgets.newHTML("<a href=\"/rules.html\" target=\"_blank\">Rules</a>"));
             links.add(MsoyUI.createLabel("|", "Spacer"));
+	    links.add(Widgets.newHTML("<a href=\"/#billing\">Donate</a>"));
+	    links.add(MsoyUI.createLabel("|", "Spacer"));
             links.add(MsoyUI.createActionLabel(_cmsgs.statusLogoff(), new ClickHandler() {
                 public void onClick (ClickEvent event) {
                     CShell.frame.logoff();
@@ -201,6 +203,10 @@ public class StatusPanel extends SmartTable
             
             int idx = 0;
             
+            //Donation Alignment
+            // FloatPanel donate = new FloatPanel("Donate");
+            // donate.add(Widgets.newHTML("<a href=\"/purchase.html\" target=\"_blank\">+</a>"));
+            
             //Coins Alignment
             FloatPanel coins = new FloatPanel("Coins");
             coins.add(new Image(Currency.COINS.getSmallIcon()));
@@ -208,6 +214,15 @@ public class StatusPanel extends SmartTable
             FocusPanel coinsFocus = new FocusPanel(coins);
             coinsFocus.addClickHandler(NaviUtil.onViewTransactions(ReportType.COINS));
             setWidget(0, idx++, coinsFocus);
+
+            FloatPanel bars = new FloatPanel("Bars");
+            bars.add(new Image(Currency.BARS.getSmallIcon()));
+            bars.add(_barsLabel = new Label("0"));
+            FocusPanel barsFocus = new FocusPanel(bars);
+            barsFocus.addClickHandler(NaviUtil.onViewTransactions(ReportType.BARS));
+            setWidget(0, idx++, barsFocus);
+            // setWidget(0, idx++, Link.create(_cmsgs.statusBuyBars(), Pages.BILLING), 1, "BuyBars");
+
 
             //Levels Alignment
             FloatPanel level = new FloatPanel("Level");
@@ -225,7 +240,7 @@ public class StatusPanel extends SmartTable
         }
 
         public void setBars (int bars) {
-            // _barsLabel.setText(Currency.BARS.format(bars));
+            _barsLabel.setText(Currency.BARS.format(bars));
         }
 
         public void setLevel (int level) {
@@ -253,6 +268,7 @@ public class StatusPanel extends SmartTable
         }
 
         protected Label _coinsLabel;
+        protected Label _barsLabel;
         protected Label _levelLabel;
         protected PopupPanel _coinPopup;
         protected PopupPanel _levelPopup;
@@ -267,3 +283,4 @@ public class StatusPanel extends SmartTable
     protected static final ShellMessages _cmsgs = GWT.create(ShellMessages.class);
     protected static final int MAX_WHO_AGE = 365; // days
 }
+
